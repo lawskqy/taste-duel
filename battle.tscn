@@ -1,0 +1,138 @@
+[gd_scene format=3 uid="uid://ikjcknxwvr6e"]
+
+[ext_resource type="Script" uid="uid://s4r6l6y8rb81" path="res://BattleController.gd" id="1_6t8i5"]
+[ext_resource type="Texture2D" uid="uid://dw762y0wi2cvl" path="res://table_example.png" id="1_7sfm4"]
+[ext_resource type="Texture2D" uid="uid://bewseioamoe04" path="res://deck.jpg" id="2_6t8i5"]
+[ext_resource type="Texture2D" uid="uid://x3e3e1wnn8v5" path="res://player1.jpg" id="2_i431l"]
+[ext_resource type="Texture2D" uid="uid://slm0f1s3k3up" path="res://player2.jpg" id="3_6t8i5"]
+[ext_resource type="Script" uid="uid://bxugqnugtnuf1" path="res://Player.gd" id="4_dw4jg"]
+
+[sub_resource type="GDScript" id="GDScript_0npn6"]
+script/source = "extends Sprite2D
+"
+
+[node name="Battle" type="Node2D" unique_id=1050492797]
+script = ExtResource("1_6t8i5")
+
+[node name="Table" type="Node2D" parent="." unique_id=534566681]
+
+[node name="Sprite2D" type="Sprite2D" parent="Table" unique_id=2090773483]
+position = Vector2(320, 70)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_7sfm4")
+centered = false
+
+[node name="Decks" type="Node2D" parent="." unique_id=1794572149]
+
+[node name="CardDeck" type="Node2D" parent="Decks" unique_id=1268150920]
+
+[node name="cardDeck" type="Sprite2D" parent="Decks/CardDeck" unique_id=148701387]
+position = Vector2(452.99997, 159.99998)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_6t8i5")
+
+[node name="Count" type="Label" parent="Decks/CardDeck" unique_id=751487047]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="CardList" type="VBoxContainer" parent="Decks/CardDeck" unique_id=1854682710]
+custom_minimum_size = Vector2(200, 700)
+offset_left = 1020.0
+offset_top = 10.0
+offset_right = 1220.0
+offset_bottom = 710.0
+
+[node name="CardDeck2" type="Node2D" parent="Decks" unique_id=1199455354]
+
+[node name="cardDeck2" type="Sprite2D" parent="Decks/CardDeck2" unique_id=1533223692]
+position = Vector2(688.99994, 421)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_6t8i5")
+
+[node name="Count" type="Label" parent="Decks/CardDeck2" unique_id=103334334]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="CardList" type="VBoxContainer" parent="Decks/CardDeck2" unique_id=381027010]
+custom_minimum_size = Vector2(200, 700)
+offset_left = 60.0
+offset_top = 10.0
+offset_right = 260.0
+offset_bottom = 710.0
+
+[node name="Background" type="CanvasLayer" parent="." unique_id=1832928434]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background" unique_id=1187808320]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.79607844, 1, 1, 1)
+
+[node name="Players" type="Node2D" parent="." unique_id=1411646162]
+
+[node name="Player2" type="Node2D" parent="Players" unique_id=78822905]
+script = ExtResource("4_dw4jg")
+
+[node name="Player2" type="Sprite2D" parent="Players/Player2" unique_id=896986197]
+position = Vector2(570, 109)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_6t8i5")
+
+[node name="BuffContainer" type="HBoxContainer" parent="Players/Player2" unique_id=1180574846]
+offset_left = 628.0
+offset_top = 27.0
+offset_right = 668.0
+offset_bottom = 67.0
+
+[node name="HP" type="ProgressBar" parent="Players/Player2" unique_id=1678379963]
+custom_minimum_size = Vector2(100, 10)
+offset_left = 517.0
+offset_top = 27.0
+offset_right = 617.0
+offset_bottom = 54.0
+value = 100.0
+
+[node name="Player1" type="Node2D" parent="Players" unique_id=1654559228]
+script = ExtResource("4_dw4jg")
+
+[node name="Player1" type="Sprite2D" parent="Players/Player1" unique_id=276893190]
+position = Vector2(565.00006, 586.00006)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_i431l")
+script = SubResource("GDScript_0npn6")
+
+[node name="HP" type="ProgressBar" parent="Players/Player1" unique_id=1590625516]
+custom_minimum_size = Vector2(100, 10)
+offset_left = 517.0
+offset_top = 501.0
+offset_right = 617.0
+offset_bottom = 528.0
+value = 100.0
+
+[node name="BuffContainer" type="HBoxContainer" parent="Players/Player1" unique_id=1498868689]
+offset_left = 644.0
+offset_top = 499.0
+offset_right = 684.0
+offset_bottom = 539.0
+
+[node name="PlayedCards" type="Node2D" parent="." unique_id=308122102]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1679151322]
+
+[node name="Turns" type="Label" parent="UI" unique_id=901691980]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ActionButton" type="Button" parent="UI" unique_id=832597678]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Effects" type="Label" parent="UI" unique_id=427376284]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="WinScreen" type="CanvasLayer" parent="." unique_id=689427175]
+visible = false

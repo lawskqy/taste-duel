@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dyofh0vy0hhym"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_loo70"]
+bg_color = Color(0.9721171, 0.7431714, 0.78835976, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.27450982, 0.16078432, 0.17254902, 0.42745098)
+shadow_size = 3
+shadow_offset = Vector2(0, 1)
+
+[node name="PreferenceForm" type="Control" unique_id=619603802]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=38856469]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=947131598]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 5.0
+offset_bottom = 45.0
+grow_horizontal = 2
+
+[node name="BackButton" type="Button" parent="HBoxContainer" unique_id=1415798364]
+custom_minimum_size = Vector2(120, 20)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_loo70")
+text = "Back
+"
