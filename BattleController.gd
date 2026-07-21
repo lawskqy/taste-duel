@@ -10,6 +10,7 @@ extends Node2D
 @onready var effect_popup = $UI/Effects
 @onready var card_list_p1 = $Decks/CardDeck/CardList
 @onready var card_list_p2 = $Decks/CardDeck2/CardList
+@onready var win_screen = $WinScreen
 
 enum BattleState {
 	WAITING_FOR_CARD,
@@ -24,7 +25,6 @@ var played_cards_list: Array = []
 var extra_turn: bool = false
 
 var effects_pool = {
-	# --- GOOD (1-15) ---
 	1:  {"name": "Deal damage x2",                "category": "good", "type": "persistent", "effect_key": "dmg_mult", "value": 2.0},
 	2:  {"name": "Deal damage x1.5",               "category": "good", "type": "persistent", "effect_key": "dmg_mult", "value": 1.5},
 	3:  {"name": "Deal +10 flat damage",           "category": "good", "type": "persistent", "effect_key": "dmg_flat", "value": 10},
@@ -40,8 +40,6 @@ var effects_pool = {
 	13: {"name": "Play 1 more card",               "category": "good", "type": "instant", "effect_key": "extra_turn", "value": true},
 	14: {"name": "Enemy skips next turn",          "category": "good", "type": "persistent", "effect_key": "skip_turn", "value": true},
 	15: {"name": "Swap pools with opponent",       "category": "good", "type": "instant", "effect_key": "swap_pools", "value": true},
-
-	# --- BAD (16-30) ---
 	16: {"name": "Deal damage x0.5",               "category": "bad", "type": "persistent", "effect_key": "dmg_mult", "value": 0.5},
 	17: {"name": "Deal damage x0.75",              "category": "bad", "type": "persistent", "effect_key": "dmg_mult", "value": 0.75},
 	18: {"name": "Miss your attack entirely",      "category": "bad", "type": "persistent", "effect_key": "dmg_miss", "value": true},
@@ -60,90 +58,19 @@ var effects_pool = {
 }
 
 func _ready():
-	_setup_test_data()
+	_setup_from_game_manager()
 	_start_battle()
+ 
+func _setup_from_game_manager() -> void:
+	var p1_prefs = GameManager.prefs_p1
+	var p2_prefs = GameManager.prefs_p2
+	var items = GameManager.items
 
-func _setup_test_data() -> void:
-	var dish_ids = [
-		"margherita_pizza", "cheeseburger", "caesar_salad", "spaghetti_carbonara",
-		"beef_lasagna", "tikka_masala", "california_roll", "ramen",
-		"french_onion_soup", "tomato_basil_soup", "beef_tacos", "chicken_burrito",
-		"pad_thai", "butter_chicken", "fish_and_chips", "beef_steak",
-		"chicken_alfredo", "mushroom_risotto", "apple_pie", "chocolate_brownie",
-		"vanilla_ice_cream",
-	]
-	var dish_names = {
-		"margherita_pizza": "Margherita Pizza", "cheeseburger": "Cheeseburger",
-		"caesar_salad": "Chicken Caesar Salad", "spaghetti_carbonara": "Spaghetti Carbonara",
-		"beef_lasagna": "Beef Lasagna", "tikka_masala": "Chicken Tikka Masala",
-		"california_roll": "California Roll", "ramen": "Ramen",
-		"french_onion_soup": "French Onion Soup", "tomato_basil_soup": "Tomato Basil Soup",
-		"beef_tacos": "Beef Tacos", "chicken_burrito": "Chicken Burrito",
-		"pad_thai": "Pad Thai", "butter_chicken": "Butter Chicken",
-		"fish_and_chips": "Fish and Chips", "beef_steak": "Beef Steak",
-		"chicken_alfredo": "Chicken Alfredo", "mushroom_risotto": "Mushroom Risotto",
-		"apple_pie": "Apple Pie", "chocolate_brownie": "Chocolate Brownie",
-		"vanilla_ice_cream": "Vanilla Ice Cream",
-	}
+	player1.setup(p1_prefs, items, effects_pool)
+	player2.setup(p2_prefs, items, effects_pool)
+ 
 
-	var test_prefs_p1 = {
-		"margherita_pizza":   { "category": "liked",    "rank": 1 },
-		"cheeseburger":       { "category": "liked",    "rank": 2 },
-		"ramen":              { "category": "liked",    "rank": 3 },
-		"beef_tacos":         { "category": "liked",    "rank": 4 },
-		"pad_thai":           { "category": "liked",    "rank": 5 },
-		"chocolate_brownie":  { "category": "liked",    "rank": 6 },
-		"vanilla_ice_cream":  { "category": "liked",    "rank": 7 },
 
-		"caesar_salad":       { "category": "disliked", "rank": 1 },
-		"french_onion_soup":  { "category": "disliked", "rank": 2 },
-		"mushroom_risotto":   { "category": "disliked", "rank": 3 },
-		"fish_and_chips":     { "category": "disliked", "rank": 4 },
-		"tomato_basil_soup":  { "category": "disliked", "rank": 5 },
-		"chicken_alfredo":    { "category": "disliked", "rank": 6 },
-		"apple_pie":          { "category": "disliked", "rank": 7 },
-
-		"spaghetti_carbonara": { "category": "neutral", "rank": 0 },
-		"beef_lasagna":        { "category": "neutral", "rank": 0 },
-		"tikka_masala":        { "category": "neutral", "rank": 0 },
-		"california_roll":     { "category": "neutral", "rank": 0 },
-		"chicken_burrito":     { "category": "neutral", "rank": 0 },
-		"butter_chicken":      { "category": "neutral", "rank": 0 },
-		"beef_steak":          { "category": "neutral", "rank": 0 },
-	}
-
-	var test_prefs_p2 = {
-		"caesar_salad":       { "category": "liked",    "rank": 1 },
-		"mushroom_risotto":   { "category": "liked",    "rank": 2 },
-		"fish_and_chips":     { "category": "liked",    "rank": 3 },
-		"apple_pie":          { "category": "liked",    "rank": 4 },
-		"french_onion_soup":  { "category": "liked",    "rank": 5 },
-		"tomato_basil_soup":  { "category": "liked",    "rank": 6 },
-		"chicken_alfredo":    { "category": "liked",    "rank": 7 },
-
-		"margherita_pizza":   { "category": "disliked", "rank": 1 },
-		"vanilla_ice_cream":  { "category": "disliked", "rank": 2 },
-		"chocolate_brownie":  { "category": "disliked", "rank": 3 },
-		"cheeseburger":       { "category": "disliked", "rank": 4 },
-		"pad_thai":           { "category": "disliked", "rank": 5 },
-		"beef_tacos":         { "category": "disliked", "rank": 6 },
-		"ramen":              { "category": "disliked", "rank": 7 },
-
-		"spaghetti_carbonara": { "category": "neutral", "rank": 0 },
-		"beef_lasagna":        { "category": "neutral", "rank": 0 },
-		"tikka_masala":        { "category": "neutral", "rank": 0 },
-		"california_roll":     { "category": "neutral", "rank": 0 },
-		"chicken_burrito":     { "category": "neutral", "rank": 0 },
-		"butter_chicken":      { "category": "neutral", "rank": 0 },
-		"beef_steak":          { "category": "neutral", "rank": 0 },
-	}
-
-	var items = []
-	for dish_id in dish_ids:
-		items.append(Item.new(dish_id, dish_names[dish_id]))
-
-	player1.setup(test_prefs_p1, items, effects_pool)
-	player2.setup(test_prefs_p2, items, effects_pool)
 
 func _start_battle() -> void:
 	current_turn = 0
@@ -427,9 +354,8 @@ func reclaim_card(item_id: String) -> void:
 func _end_battle() -> void:
 	state = BattleState.BATTLE_OVER
 	var winner = "Player 1" if player2.hp <= 0 else "Player 2"
-	turn_label.text = winner + " wins!"
 	action_button.disabled = true
-	print(winner + " wins! (opponent reached 0 HP)")
+	win_screen.show_result(winner, "reached 0 HP", player1.hp, player2.hp)
 
 func _end_battle_by_hp() -> void:
 	state = BattleState.BATTLE_OVER
@@ -440,10 +366,9 @@ func _end_battle_by_hp() -> void:
 		winner = "Player 2"
 	else:
 		winner = "Draw"
-	turn_label.text = winner + " wins! (pools exhausted, higher HP)" if winner != "Draw" else "It's a draw!"
 	action_button.disabled = true
-	print(winner, " — pools exhausted. Final HP: P1=", player1.hp, " P2=", player2.hp)
-
+	win_screen.show_result(winner, "pools exhausted, higher HP", player1.hp, player2.hp)
+	
 func _update_ui() -> void:
 	if current_turn == 0:
 		turn_label.text = "Player 1's Turn"

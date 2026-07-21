@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://ddqekkrm4dsg4"]
+
+[ext_resource type="Script" uid="uid://c51bgs6xsil6r" path="res://DishCard.gd" id="1_7ey6j"]
+
+[node name="DishCard" type="PanelContainer" unique_id=59150437]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_7ey6j")
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=1786773032]
+layout_mode = 2
+
+[node name="RankLabel" type="Label" parent="HBox" unique_id=1538491603]
+layout_mode = 2
+
+[node name="DishIcon" type="TextureRect" parent="HBox" unique_id=1476768848]
+layout_mode = 2
+
+[node name="DishName" type="Label" parent="HBox" unique_id=1184206969]
+layout_mode = 2

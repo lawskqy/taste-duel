@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://101qcf3iqhcx"]
+
+[ext_resource type="Script" uid="uid://rxoclqjjy0ry" path="res://PreferenceForm.gd" id="1_j7t3q"]
+
+[node name="PreferenceForm" type="Control" unique_id=1407856260]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j7t3q")
+
+[node name="Background" type="ColorRect" parent="." unique_id=82395402]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Header" type="HBoxContainer" parent="." unique_id=2101909733]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerLabel" type="Label" parent="Header" unique_id=619678323]
+layout_mode = 2
+
+[node name="TimerLabel" type="Label" parent="Header" unique_id=1618073625]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Header" unique_id=1357622443]
+layout_mode = 2
+
+[node name="RandomizeButton" type="Button" parent="Header/Buttons" unique_id=998663374]
+layout_mode = 2
+text = "Randomize"
+
+[node name="ConfirmButton" type="Button" parent="Header/Buttons" unique_id=2089249518]
+layout_mode = 2
+text = "Confirm"
+
+[node name="Pool" type="VBoxContainer" parent="." unique_id=2127281493]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PoolHeader" type="Label" parent="Pool" unique_id=1615329277]
+layout_mode = 2
+
+[node name="PoolGrid" type="GridContainer" parent="Pool" unique_id=1366987980]
+layout_mode = 2
+
+[node name="Columns" type="HBoxContainer" parent="." unique_id=1155287510]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DislikeColumn" type="VBoxContainer" parent="Columns" unique_id=422375204]
+layout_mode = 2
+
+[node name="DislikeHeader" type="Label" parent="Columns/DislikeColumn" unique_id=822332970]
+layout_mode = 2
+
+[node name="DislikeList" type="VBoxContainer" parent="Columns/DislikeColumn" unique_id=1832672267]
+layout_mode = 2
+
+[node name="NeutralColumn" type="VBoxContainer" parent="Columns" unique_id=1048030153]
+layout_mode = 2
+
+[node name="NeutralHeader" type="Label" parent="Columns/NeutralColumn" unique_id=1005260035]
+layout_mode = 2
+
+[node name="NeutralList" type="VBoxContainer" parent="Columns/NeutralColumn" unique_id=1307674524]
+layout_mode = 2
+
+[node name="LikeColumn" type="VBoxContainer" parent="Columns" unique_id=1488484870]
+layout_mode = 2
+
+[node name="LikeHeader" type="Label" parent="Columns/LikeColumn" unique_id=1068827629]
+layout_mode = 2
+
+[node name="LikeList" type="VBoxContainer" parent="Columns/LikeColumn" unique_id=317059178]
+layout_mode = 2
