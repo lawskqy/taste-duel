@@ -12,71 +12,85 @@ grow_vertical = 2
 script = ExtResource("1_j7t3q")
 
 [node name="Background" type="ColorRect" parent="." unique_id=82395402]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.68235296, 0.68235296, 0.67058825)
+
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1300642168]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Header" type="HBoxContainer" parent="." unique_id=2101909733]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="PlayerLabel" type="Label" parent="Header" unique_id=619678323]
+[node name="Header" type="HBoxContainer" parent="Layout" unique_id=2101909733]
 layout_mode = 2
 
-[node name="TimerLabel" type="Label" parent="Header" unique_id=1618073625]
+[node name="PlayerLabel" type="Label" parent="Layout/Header" unique_id=619678323]
 layout_mode = 2
 
-[node name="Buttons" type="HBoxContainer" parent="Header" unique_id=1357622443]
+[node name="TimerLabel" type="Label" parent="Layout/Header" unique_id=1618073625]
 layout_mode = 2
 
-[node name="RandomizeButton" type="Button" parent="Header/Buttons" unique_id=998663374]
+[node name="Buttons" type="HBoxContainer" parent="Layout/Header" unique_id=1357622443]
+layout_mode = 2
+
+[node name="RandomizeButton" type="Button" parent="Layout/Header/Buttons" unique_id=998663374]
 layout_mode = 2
 text = "Randomize"
 
-[node name="ConfirmButton" type="Button" parent="Header/Buttons" unique_id=2089249518]
+[node name="ConfirmButton" type="Button" parent="Layout/Header/Buttons" unique_id=2089249518]
 layout_mode = 2
 text = "Confirm"
 
-[node name="Pool" type="VBoxContainer" parent="." unique_id=2127281493]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="PoolHeader" type="Label" parent="Pool" unique_id=1615329277]
+[node name="Pool" type="VBoxContainer" parent="Layout" unique_id=2127281493]
 layout_mode = 2
 
-[node name="PoolGrid" type="GridContainer" parent="Pool" unique_id=1366987980]
+[node name="PoolHeader" type="Label" parent="Layout/Pool" unique_id=1615329277]
 layout_mode = 2
 
-[node name="Columns" type="HBoxContainer" parent="." unique_id=1155287510]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="PoolGrid" type="GridContainer" parent="Layout/Pool" unique_id=1366987980]
+layout_mode = 2
+columns = 7
 
-[node name="DislikeColumn" type="VBoxContainer" parent="Columns" unique_id=422375204]
+[node name="Columns" type="HBoxContainer" parent="Layout" unique_id=1155287510]
+custom_minimum_size = Vector2(50, 200)
 layout_mode = 2
 
-[node name="DislikeHeader" type="Label" parent="Columns/DislikeColumn" unique_id=822332970]
+[node name="DislikeColumn" type="VBoxContainer" parent="Layout/Columns" unique_id=422375204]
+custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
 
-[node name="DislikeList" type="VBoxContainer" parent="Columns/DislikeColumn" unique_id=1832672267]
+[node name="DislikeHeader" type="Label" parent="Layout/Columns/DislikeColumn" unique_id=822332970]
+layout_mode = 2
+text = "Dislike"
+
+[node name="DislikeList" type="VBoxContainer" parent="Layout/Columns/DislikeColumn" unique_id=1832672267]
+custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
 
-[node name="NeutralColumn" type="VBoxContainer" parent="Columns" unique_id=1048030153]
+[node name="NeutralColumn" type="VBoxContainer" parent="Layout/Columns" unique_id=1048030153]
+custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
 
-[node name="NeutralHeader" type="Label" parent="Columns/NeutralColumn" unique_id=1005260035]
+[node name="NeutralHeader" type="Label" parent="Layout/Columns/NeutralColumn" unique_id=1005260035]
+layout_mode = 2
+text = "Neutral"
+
+[node name="NeutralList" type="VBoxContainer" parent="Layout/Columns/NeutralColumn" unique_id=1307674524]
+custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
 
-[node name="NeutralList" type="VBoxContainer" parent="Columns/NeutralColumn" unique_id=1307674524]
+[node name="LikeColumn" type="VBoxContainer" parent="Layout/Columns" unique_id=1488484870]
+custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
 
-[node name="LikeColumn" type="VBoxContainer" parent="Columns" unique_id=1488484870]
+[node name="LikeHeader" type="Label" parent="Layout/Columns/LikeColumn" unique_id=1068827629]
 layout_mode = 2
+text = "Like"
 
-[node name="LikeHeader" type="Label" parent="Columns/LikeColumn" unique_id=1068827629]
-layout_mode = 2
-
-[node name="LikeList" type="VBoxContainer" parent="Columns/LikeColumn" unique_id=317059178]
+[node name="LikeList" type="VBoxContainer" parent="Layout/Columns/LikeColumn" unique_id=317059178]
+custom_minimum_size = Vector2(200, 300)
 layout_mode = 2

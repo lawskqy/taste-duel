@@ -1,13 +1,13 @@
 extends Control
 
-@onready var player_label = $Header/PlayerLabel
-@onready var timer_label = $Header/TimerLabel
-@onready var randomize_btn = $Header/Buttons/RandomizeButton
-@onready var confirm_btn = $Header/Buttons/ConfirmButton
-@onready var pool_grid = $Pool/PoolGrid
-@onready var dislike_list = $Columns/DislikeColumn/DislikeList
-@onready var neutral_list = $Columns/NeutralColumn/NeutralList
-@onready var like_list = $Columns/LikeColumn/LikeList
+@onready var player_label = $Layout/Header/PlayerLabel
+@onready var timer_label = $Layout/Header/TimerLabel
+@onready var randomize_btn = $Layout/Header/Buttons/RandomizeButton
+@onready var confirm_btn = $Layout/Header/Buttons/ConfirmButton
+@onready var pool_grid = $Layout/Pool/PoolGrid
+@onready var dislike_list = $Layout/Columns/DislikeColumn/DislikeList
+@onready var neutral_list = $Layout/Columns/NeutralColumn/NeutralList
+@onready var like_list = $Layout/Columns/LikeColumn/LikeList
 
 const DISH_CARD = preload("res://DishCard.tscn")
 const TIME_LIMIT = 120  
@@ -60,14 +60,24 @@ func _process(delta: float) -> void:
 	if drag_ghost:
 		drag_ghost.global_position = get_global_mouse_position() + drag_offset
 		
-func _unhandled_input(event: InputEvent) -> void:
+var drag_start_pos: Vector2 = Vector2.ZERO
+var mouse_held: bool = false
+var drag_threshold: float = 5.0
+
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				_try_start_drag(event.global_position)
+				drag_start_pos = event.global_position
+				mouse_held = true
 			else:
+				mouse_held = false
 				_end_drag(event.global_position)
-
+	elif event is InputEventMouseMotion:
+		if mouse_held and not dragging_card:
+			if event.global_position.distance_to(drag_start_pos) > drag_threshold:
+				_try_start_drag(drag_start_pos)
+				
 func _try_start_drag(mouse_pos: Vector2) -> void:
 	for list in all_lists:
 		for card in list.get_children():
