@@ -11,6 +11,10 @@ extends Node2D
 @onready var card_list_p1 = $Decks/CardDeck/CardList
 @onready var card_list_p2 = $Decks/CardDeck2/CardList
 @onready var win_screen = $WinScreen
+@onready var player1_sprite = $Players/Player1/Player1
+@onready var player2_sprite = $Players/Player2/Player2
+@onready var hp_bar_p1 = $Players/Player1/HP
+@onready var hp_bar_p2 = $Players/Player2/HP
 
 enum BattleState {
 	WAITING_FOR_CARD,
@@ -23,6 +27,8 @@ var state = BattleState.WAITING_FOR_CARD
 var current_turn: int = 0
 var played_cards_list: Array = []
 var extra_turn: bool = false
+
+var last_played_card_node: Node = null
 
 var effects_pool = {
 	1:  {"name": "Deal damage x2",                "category": "good", "type": "persistent", "effect_key": "dmg_mult", "value": 2.0},
@@ -60,17 +66,67 @@ var effects_pool = {
 func _ready():
 	_setup_from_game_manager()
 	_start_battle()
- 
+
 func _setup_from_game_manager() -> void:
 	var p1_prefs = GameManager.prefs_p1
 	var p2_prefs = GameManager.prefs_p2
 	var items = GameManager.items
-
+	if p1_prefs.is_empty() or p2_prefs.is_empty():
+		_setup_test_data()
+		return
 	player1.setup(p1_prefs, items, effects_pool)
 	player2.setup(p2_prefs, items, effects_pool)
- 
 
-
+func _setup_test_data() -> void:
+	var test_prefs_p1 = {
+		"margherita_pizza":   { "category": "liked",    "rank": 1 },
+		"cheeseburger":       { "category": "liked",    "rank": 2 },
+		"ramen":              { "category": "liked",    "rank": 3 },
+		"beef_tacos":         { "category": "liked",    "rank": 4 },
+		"pad_thai":           { "category": "liked",    "rank": 5 },
+		"chocolate_brownie":  { "category": "liked",    "rank": 6 },
+		"vanilla_ice_cream":  { "category": "liked",    "rank": 7 },
+		"caesar_salad":       { "category": "disliked", "rank": 1 },
+		"french_onion_soup":  { "category": "disliked", "rank": 2 },
+		"mushroom_risotto":   { "category": "disliked", "rank": 3 },
+		"fish_and_chips":     { "category": "disliked", "rank": 4 },
+		"tomato_basil_soup":  { "category": "disliked", "rank": 5 },
+		"chicken_alfredo":    { "category": "disliked", "rank": 6 },
+		"apple_pie":          { "category": "disliked", "rank": 7 },
+		"spaghetti_carbonara": { "category": "neutral", "rank": 0 },
+		"beef_lasagna":        { "category": "neutral", "rank": 0 },
+		"tikka_masala":        { "category": "neutral", "rank": 0 },
+		"california_roll":     { "category": "neutral", "rank": 0 },
+		"chicken_burrito":     { "category": "neutral", "rank": 0 },
+		"butter_chicken":      { "category": "neutral", "rank": 0 },
+		"beef_steak":          { "category": "neutral", "rank": 0 },
+	}
+	var test_prefs_p2 = {
+		"caesar_salad":       { "category": "liked",    "rank": 1 },
+		"mushroom_risotto":   { "category": "liked",    "rank": 2 },
+		"fish_and_chips":     { "category": "liked",    "rank": 3 },
+		"apple_pie":          { "category": "liked",    "rank": 4 },
+		"french_onion_soup":  { "category": "liked",    "rank": 5 },
+		"tomato_basil_soup":  { "category": "liked",    "rank": 6 },
+		"chicken_alfredo":    { "category": "liked",    "rank": 7 },
+		"margherita_pizza":   { "category": "disliked", "rank": 1 },
+		"vanilla_ice_cream":  { "category": "disliked", "rank": 2 },
+		"chocolate_brownie":  { "category": "disliked", "rank": 3 },
+		"cheeseburger":       { "category": "disliked", "rank": 4 },
+		"pad_thai":           { "category": "disliked", "rank": 5 },
+		"beef_tacos":         { "category": "disliked", "rank": 6 },
+		"ramen":              { "category": "disliked", "rank": 7 },
+		"spaghetti_carbonara": { "category": "neutral", "rank": 0 },
+		"beef_lasagna":        { "category": "neutral", "rank": 0 },
+		"tikka_masala":        { "category": "neutral", "rank": 0 },
+		"california_roll":     { "category": "neutral", "rank": 0 },
+		"chicken_burrito":     { "category": "neutral", "rank": 0 },
+		"butter_chicken":      { "category": "neutral", "rank": 0 },
+		"beef_steak":          { "category": "neutral", "rank": 0 },
+	}
+	var items = GameManager.items
+	player1.setup(test_prefs_p1, items, effects_pool)
+	player2.setup(test_prefs_p2, items, effects_pool)
 
 func _start_battle() -> void:
 	current_turn = 0
@@ -88,6 +144,7 @@ func get_opponent() -> Player:
 		return player2
 	return player1
 
+
 func _build_card_lists() -> void:
 	_populate_card_list(card_list_p1, player1)
 	_populate_card_list(card_list_p2, player2)
@@ -96,10 +153,32 @@ func _populate_card_list(container: VBoxContainer, player: Player) -> void:
 	for child in container.get_children():
 		child.queue_free()
 	for item in player.pool:
+		var hbox = HBoxContainer.new()
+
+		var tex_rect = TextureRect.new()
+		tex_rect.custom_minimum_size = Vector2(40, 40)
+		tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		tex_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		var texture = GameManager.get_texture(item.id)
+		if texture:
+			tex_rect.texture = texture
+		hbox.add_child(tex_rect)
+
 		var btn = Button.new()
 		btn.text = item.name
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.pressed.connect(func(): play_item(item.id))
-		container.add_child(btn)
+		hbox.add_child(btn)
+
+		container.add_child(hbox)
+
+func _set_cards_interactable(container: VBoxContainer, enabled: bool) -> void:
+	for child in container.get_children():
+		if child is HBoxContainer:
+			var btn = child.get_child(1)
+			if btn is Button:
+				btn.disabled = !enabled
+
 
 func play_item(item_id: String) -> void:
 	if state != BattleState.WAITING_FOR_CARD:
@@ -119,47 +198,39 @@ func play_item(item_id: String) -> void:
 
 	var pref = opponent.get_preference(item_id)
 	var damage_value = _calculate_hp(pref)
-
 	damage_value = _apply_damage_modifiers(attacker, damage_value)
 
-	print("\n==================== TURN LOG ====================")
-	print("Attacker: ", attacker.name, "  |  Opponent: ", opponent.name)
-	print("Dish played: ", item_id)
-	print("Opponent's preference: category=", pref["category"], "  rank=", pref["rank"])
-	print("Calculated value: ", damage_value)
+	_animate_card_to_table(item_id)
 
 	if pref["category"] != "neutral":
 		if pref["category"] == "disliked":
 			opponent.take_damage(damage_value)
-			print("→ Result: dealt ", damage_value, " damage to ", opponent.name)
+			_animate_hit(opponent)
+			_show_effect_popup("-%d HP!" % damage_value, Color(1, 0.3, 0.3))
 		elif pref["category"] == "liked":
 			if not ("no_heal" in opponent.active_buffs):
 				opponent.heal(damage_value)
-				print("→ Result: healed ", opponent.name, " for ", damage_value)
+				_show_effect_popup("+%d HP" % damage_value, Color(0.3, 1, 0.5))
 			else:
-				print("→ Result: heal blocked by 'cannot heal' debuff")
+				_show_effect_popup("Heal blocked!", Color(1, 0.7, 0))
 			opponent.active_buffs.erase("no_heal")
 		if pref["rank"] < 4:
 			var amount = 4 - pref["rank"]
-			print("Rank ", pref["rank"], " triggers ", amount, " effect draw(s)")
 			var drawn = draw_effect(amount, attacker.player_effect_pool)
-			_log_drawn_effects(drawn)
+			_show_effects_popup_text(drawn)
 			resolve_effects(drawn, pref["category"], attacker, opponent)
-		else:
-			print("Rank ", pref["rank"], " — no effects triggered")
 	else:
-		print("Neutral dish — drawing 1 effect")
 		var drawn = draw_effect(1, attacker.player_effect_pool)
-		_log_drawn_effects(drawn)
+		_show_effects_popup_text(drawn)
 		resolve_effects(drawn, "neutral", attacker, opponent)
-
-	print("HP after resolution — ", attacker.name, ": ", attacker.hp, "  |  ", opponent.name, ": ", opponent.hp)
-	print("===================================================\n")
 
 	played_cards_list.append(item_id)
 	attacker.remove_from_pool(item_id)
 
-	_update_hp_bars()
+	_update_hp_bars_animated(
+		hp_bar_p1 if opponent == player2 else hp_bar_p2,
+		opponent.hp
+	)
 
 	if not opponent.is_alive():
 		_end_battle()
@@ -177,6 +248,110 @@ func play_item(item_id: String) -> void:
 			extra_turn = false
 		_build_card_lists()
 		_update_ui()
+
+
+func _animate_card_to_table(item_id: String) -> void:
+	var card_visual = PanelContainer.new()
+	card_visual.custom_minimum_size = Vector2(80, 100)
+
+	var vbox = VBoxContainer.new()
+	card_visual.add_child(vbox)
+
+	var img = TextureRect.new()
+	img.custom_minimum_size = Vector2(70, 70)
+	img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	img.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+	var texture = GameManager.get_texture(item_id)
+	if texture:
+		img.texture = texture
+	vbox.add_child(img)
+
+	var lbl = Label.new()
+	for item in get_current_player().pool:
+		if item.id == item_id:
+			lbl.text = item.name
+			break
+	if lbl.text.is_empty():
+		lbl.text = item_id
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_size_override("font_size", 10)
+	vbox.add_child(lbl)
+
+	add_child(card_visual)
+
+	var start_pos = deck_left.global_position if current_turn == 0 else deck_right.global_position
+	var end_pos = played_cards.global_position
+
+	card_visual.global_position = start_pos
+
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.tween_property(card_visual, "global_position", end_pos, 0.4)
+	tween.tween_callback(func():
+		var table_cards = played_cards.get_children()
+		if table_cards.size() >= 3:
+			table_cards[0].queue_free()
+		card_visual.reparent(played_cards)
+	)
+
+func _animate_hit(target: Player) -> void:
+	var sprite = target.get_node_or_null("Player1")
+	if sprite == null:
+		sprite = target.get_node_or_null("Player2")
+	if sprite == null:
+		return
+
+	var original_pos = sprite.position
+	var tween = create_tween()
+	tween.tween_property(sprite, "position", original_pos + Vector2(12, 0), 0.05)
+	tween.tween_property(sprite, "position", original_pos + Vector2(-12, 0), 0.05)
+	tween.tween_property(sprite, "position", original_pos + Vector2(8, 0), 0.05)
+	tween.tween_property(sprite, "position", original_pos + Vector2(-8, 0), 0.05)
+	tween.tween_property(sprite, "position", original_pos, 0.05)
+
+	var flash_tween = create_tween()
+	flash_tween.tween_property(sprite, "modulate", Color(1, 0.2, 0.2, 1), 0.05)
+	flash_tween.tween_property(sprite, "modulate", Color(1, 1, 1, 1), 0.25)
+
+func _show_effect_popup(text: String, color: Color) -> void:
+	effect_popup.text = text
+	effect_popup.add_theme_color_override("font_color", color)
+	effect_popup.visible = true
+	effect_popup.modulate.a = 1.0
+	effect_popup.scale = Vector2(0.5, 0.5)
+
+	var tween = create_tween()
+	tween.tween_property(effect_popup, "scale", Vector2(1.2, 1.2), 0.1)
+	tween.tween_property(effect_popup, "scale", Vector2(1.0, 1.0), 0.1)
+	tween.tween_interval(0.8)
+	tween.tween_property(effect_popup, "modulate:a", 0.0, 0.4)
+	tween.tween_callback(func(): effect_popup.visible = false)
+
+func _show_effects_popup_text(drawn: Array) -> void:
+	if drawn.is_empty():
+		return
+	for effect_id in drawn:
+		var effect = effects_pool.get(effect_id)
+		if effect:
+			var color = Color(0.3, 0.8, 1) if effect["category"] == "good" else Color(1, 0.5, 0.2)
+			_show_effect_popup("✨ " + effect["name"], color)
+			await get_tree().create_timer(0.5).timeout
+
+func _update_hp_bars() -> void:
+	hp_bar_p1.max_value = player1.max_hp
+	hp_bar_p1.value = player1.hp
+	hp_bar_p2.max_value = player2.max_hp
+	hp_bar_p2.value = player2.hp
+
+func _update_hp_bars_animated(bar: ProgressBar, new_value: int) -> void:
+	if bar == hp_bar_p1:
+		bar.max_value = player1.max_hp
+	else:
+		bar.max_value = player2.max_hp
+	var tween = create_tween()
+	tween.tween_property(bar, "value", float(new_value), 0.4)
+
 
 func _apply_damage_modifiers(attacker: Player, base_damage: int) -> int:
 	var result = base_damage
@@ -196,7 +371,7 @@ func _apply_damage_modifiers(attacker: Player, base_damage: int) -> int:
 		attacker.active_buffs.erase("dmg_flat")
 
 	if "dmg_crit" in attacker.active_buffs:
-		result = 35  
+		result = 50
 		attacker.active_buffs.erase("dmg_crit")
 
 	if "dmg_twice" in attacker.active_buffs:
@@ -253,20 +428,9 @@ func resolve_effects(drawn_effects: Array, card_category: String, attacker: Play
 
 		_apply_effect(effect, target, other, attacker, opponent)
 
-func _log_drawn_effects(drawn: Array) -> void:
-	if drawn.is_empty():
-		print("No effects drawn (pool may be empty)")
-		return
-	for effect_id in drawn:
-		var effect = effects_pool.get(effect_id)
-		if effect:
-			print("  Drew: [", effect["category"], "/", effect["type"], "] ", effect["name"])
-
 func _apply_effect(effect: Dictionary, target: Player, other: Player, attacker: Player, opponent: Player) -> void:
 	var key = effect["effect_key"]
 	var value = effect["value"]
-
-	print("  Resolving '", effect["name"], "' → target: ", target.name)
 
 	match effect["type"]:
 		"persistent":
@@ -288,8 +452,6 @@ func _apply_instant_effect(key: String, value, target: Player, other: Player) ->
 		"max_hp_up":
 			target.max_hp = min(target.max_hp + value, 150)
 			target.hp = min(target.hp + value, target.max_hp)
-		"heal_full":
-			target.heal(target.max_hp)
 		"heal_pct_missing":
 			var missing = target.max_hp - target.hp
 			target.heal(int(missing * value))
@@ -329,7 +491,7 @@ func _apply_instant_effect(key: String, value, target: Player, other: Player) ->
 			target.active_buffs = other.active_buffs
 			other.active_buffs = tmp_buffs
 		"copy_last_effect":
-			pass 
+			pass
 
 func _apply_special_effect(key: String, value, attacker: Player) -> void:
 	match key:
@@ -351,6 +513,7 @@ func reclaim_card(item_id: String) -> void:
 	_build_card_lists()
 	_update_ui()
 
+
 func _end_battle() -> void:
 	state = BattleState.BATTLE_OVER
 	var winner = "Player 1" if player2.hp <= 0 else "Player 2"
@@ -368,7 +531,7 @@ func _end_battle_by_hp() -> void:
 		winner = "Draw"
 	action_button.disabled = true
 	win_screen.show_result(winner, "pools exhausted, higher HP", player1.hp, player2.hp)
-	
+
 func _update_ui() -> void:
 	if current_turn == 0:
 		turn_label.text = "Player 1's Turn"
@@ -378,12 +541,3 @@ func _update_ui() -> void:
 		turn_label.text = "Player 2's Turn"
 		_set_cards_interactable(card_list_p1, false)
 		_set_cards_interactable(card_list_p2, true)
-
-func _set_cards_interactable(container: VBoxContainer, enabled: bool) -> void:
-	for child in container.get_children():
-		if child is Button:
-			child.disabled = !enabled
-
-func _update_hp_bars() -> void:
-	$Players/Player1/HP.value = player1.hp
-	$Players/Player2/HP.value = player2.hp

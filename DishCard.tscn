@@ -14,7 +14,10 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="DishIcon" type="TextureRect" parent="HBox" unique_id=1476768848]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
 
 [node name="DishName" type="Label" parent="HBox" unique_id=1184206969]
 layout_mode = 2

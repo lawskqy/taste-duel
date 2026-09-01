@@ -43,7 +43,7 @@ func _populate_pool() -> void:
 	for item in dishes:
 		var card = DISH_CARD.instantiate()
 		pool_grid.add_child(card)
-		card.setup(item.id, item.name)
+		card.setup(item.id, item.name, GameManager.get_texture(item.id))
 		card.current_container = pool_grid
 
 func _process(delta: float) -> void:
