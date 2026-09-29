@@ -1,0 +1,1545 @@
+{
+  "version": 1,
+  "themes": {
+    "food": {
+      "name": "Food & Drink",
+      "tagline": "Your next great bite",
+      "icon": "FD",
+      "accent": "#ff8779",
+      "items": [
+        {
+          "id": "margherita_pizza",
+          "name": "Margherita Pizza",
+          "icon": "FD",
+          "description": "Margherita Pizza: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "cheeseburger",
+          "name": "Cheeseburger",
+          "icon": "FD",
+          "description": "Cheeseburger: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "caesar_salad",
+          "name": "Chicken Caesar Salad",
+          "icon": "FD",
+          "description": "Chicken Caesar Salad: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "spaghetti_carbonara",
+          "name": "Spaghetti Carbonara",
+          "icon": "FD",
+          "description": "Spaghetti Carbonara: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "beef_lasagna",
+          "name": "Beef Lasagna",
+          "icon": "FD",
+          "description": "Beef Lasagna: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "tikka_masala",
+          "name": "Chicken Tikka Masala",
+          "icon": "FD",
+          "description": "Chicken Tikka Masala: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "california_roll",
+          "name": "California Roll",
+          "icon": "FD",
+          "description": "California Roll: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "ramen",
+          "name": "Ramen",
+          "icon": "FD",
+          "description": "Ramen: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "french_onion_soup",
+          "name": "French Onion Soup",
+          "icon": "FD",
+          "description": "French Onion Soup: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "tomato_basil_soup",
+          "name": "Tomato Basil Soup",
+          "icon": "FD",
+          "description": "Tomato Basil Soup: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "beef_tacos",
+          "name": "Beef Tacos",
+          "icon": "FD",
+          "description": "Beef Tacos: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "chicken_burrito",
+          "name": "Chicken Burrito",
+          "icon": "FD",
+          "description": "Chicken Burrito: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "pad_thai",
+          "name": "Pad Thai",
+          "icon": "FD",
+          "description": "Pad Thai: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "butter_chicken",
+          "name": "Butter Chicken",
+          "icon": "FD",
+          "description": "Butter Chicken: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "fish_and_chips",
+          "name": "Fish and Chips",
+          "icon": "FD",
+          "description": "Fish and Chips: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "beef_steak",
+          "name": "Beef Steak",
+          "icon": "FD",
+          "description": "Beef Steak: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "chicken_alfredo",
+          "name": "Chicken Alfredo",
+          "icon": "FD",
+          "description": "Chicken Alfredo: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "mushroom_risotto",
+          "name": "Mushroom Risotto",
+          "icon": "FD",
+          "description": "Mushroom Risotto: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "apple_pie",
+          "name": "Apple Pie",
+          "icon": "FD",
+          "description": "Apple Pie: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "chocolate_brownie",
+          "name": "Chocolate Brownie",
+          "icon": "FD",
+          "description": "Chocolate Brownie: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "vanilla_ice_cream",
+          "name": "Vanilla Ice Cream",
+          "icon": "FD",
+          "description": "Vanilla Ice Cream: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_vietnamese_pho",
+          "name": "Vietnamese Pho",
+          "icon": "FD",
+          "description": "Vietnamese Pho: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_chicken_biryani",
+          "name": "Chicken Biryani",
+          "icon": "FD",
+          "description": "Chicken Biryani: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_falafel_wrap",
+          "name": "Falafel Wrap",
+          "icon": "FD",
+          "description": "Falafel Wrap: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_hummus_plate",
+          "name": "Hummus Plate",
+          "icon": "FD",
+          "description": "Hummus Plate: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_greek_salad",
+          "name": "Greek Salad",
+          "icon": "FD",
+          "description": "Greek Salad: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_fish_tacos",
+          "name": "Fish Tacos",
+          "icon": "FD",
+          "description": "Fish Tacos: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_lobster_roll",
+          "name": "Lobster Roll",
+          "icon": "FD",
+          "description": "Lobster Roll: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_clam_chowder",
+          "name": "Clam Chowder",
+          "icon": "FD",
+          "description": "Clam Chowder: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_baked_ziti",
+          "name": "Baked Ziti",
+          "icon": "FD",
+          "description": "Baked Ziti: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_potato_gnocchi",
+          "name": "Potato Gnocchi",
+          "icon": "FD",
+          "description": "Potato Gnocchi: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_pesto_pasta",
+          "name": "Pesto Pasta",
+          "icon": "FD",
+          "description": "Pesto Pasta: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_eggplant_parmesan",
+          "name": "Eggplant Parmesan",
+          "icon": "FD",
+          "description": "Eggplant Parmesan: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_ratatouille",
+          "name": "Ratatouille",
+          "icon": "FD",
+          "description": "Ratatouille: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_shepherd_s_pie",
+          "name": "Shepherd's Pie",
+          "icon": "FD",
+          "description": "Shepherd's Pie: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_chicken_pot_pie",
+          "name": "Chicken Pot Pie",
+          "icon": "FD",
+          "description": "Chicken Pot Pie: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_french_toast",
+          "name": "French Toast",
+          "icon": "FD",
+          "description": "French Toast: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_pancakes",
+          "name": "Pancakes",
+          "icon": "FD",
+          "description": "Pancakes: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_waffles",
+          "name": "Waffles",
+          "icon": "FD",
+          "description": "Waffles: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_grilled_cheese",
+          "name": "Grilled Cheese",
+          "icon": "FD",
+          "description": "Grilled Cheese: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_mac_and_cheese",
+          "name": "Mac and Cheese",
+          "icon": "FD",
+          "description": "Mac and Cheese: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_chicken_wings",
+          "name": "Chicken Wings",
+          "icon": "FD",
+          "description": "Chicken Wings: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_barbecue_ribs",
+          "name": "Barbecue Ribs",
+          "icon": "FD",
+          "description": "Barbecue Ribs: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_pork_dumplings",
+          "name": "Pork Dumplings",
+          "icon": "FD",
+          "description": "Pork Dumplings: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_dim_sum",
+          "name": "Dim Sum",
+          "icon": "FD",
+          "description": "Dim Sum: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_crepes",
+          "name": "Crepes",
+          "icon": "FD",
+          "description": "Crepes: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_cheesecake",
+          "name": "Cheesecake",
+          "icon": "FD",
+          "description": "Cheesecake: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_doughnuts",
+          "name": "Doughnuts",
+          "icon": "FD",
+          "description": "Doughnuts: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_bubble_tea",
+          "name": "Bubble Tea",
+          "icon": "FD",
+          "description": "Bubble Tea: a comfort-food pick. Is it your order, or someone else's?"
+        },
+        {
+          "id": "food_fresh_lemonade",
+          "name": "Fresh Lemonade",
+          "icon": "FD",
+          "description": "Fresh Lemonade: a comfort-food pick. Is it your order, or someone else's?"
+        }
+      ]
+    },
+    "travel": {
+      "name": "Cities & Countries",
+      "tagline": "Pick a place to get lost",
+      "icon": "TR",
+      "accent": "#7bbcf2",
+      "items": [
+        {
+          "id": "travel_tokyo_japan",
+          "name": "Tokyo, Japan",
+          "icon": "TR",
+          "description": "A city break in Japan. What would you explore first in Tokyo?"
+        },
+        {
+          "id": "travel_kyoto_japan",
+          "name": "Kyoto, Japan",
+          "icon": "TR",
+          "description": "A city break in Japan. What would you explore first in Kyoto?"
+        },
+        {
+          "id": "travel_osaka_japan",
+          "name": "Osaka, Japan",
+          "icon": "TR",
+          "description": "A city break in Japan. What would you explore first in Osaka?"
+        },
+        {
+          "id": "travel_seoul_south_korea",
+          "name": "Seoul, South Korea",
+          "icon": "TR",
+          "description": "A city break in South Korea. What would you explore first in Seoul?"
+        },
+        {
+          "id": "travel_singapore",
+          "name": "Singapore",
+          "icon": "TR",
+          "description": "A city break in Singapore. What would you explore first?"
+        },
+        {
+          "id": "travel_bangkok_thailand",
+          "name": "Bangkok, Thailand",
+          "icon": "TR",
+          "description": "A city break in Thailand. What would you explore first in Bangkok?"
+        },
+        {
+          "id": "travel_hanoi_vietnam",
+          "name": "Hanoi, Vietnam",
+          "icon": "TR",
+          "description": "A city break in Vietnam. What would you explore first in Hanoi?"
+        },
+        {
+          "id": "travel_bali_indonesia",
+          "name": "Bali, Indonesia",
+          "icon": "TR",
+          "description": "A city break in Indonesia. What would you explore first in Bali?"
+        },
+        {
+          "id": "travel_sydney_australia",
+          "name": "Sydney, Australia",
+          "icon": "TR",
+          "description": "A city break in Australia. What would you explore first in Sydney?"
+        },
+        {
+          "id": "travel_auckland_new_zealand",
+          "name": "Auckland, New Zealand",
+          "icon": "TR",
+          "description": "A city break in New Zealand. What would you explore first in Auckland?"
+        },
+        {
+          "id": "travel_vancouver_canada",
+          "name": "Vancouver, Canada",
+          "icon": "TR",
+          "description": "A city break in Canada. What would you explore first in Vancouver?"
+        },
+        {
+          "id": "travel_new_york_city_usa",
+          "name": "New York City, USA",
+          "icon": "TR",
+          "description": "A city break in USA. What would you explore first in New York City?"
+        },
+        {
+          "id": "travel_new_orleans_usa",
+          "name": "New Orleans, USA",
+          "icon": "TR",
+          "description": "A city break in USA. What would you explore first in New Orleans?"
+        },
+        {
+          "id": "travel_mexico_city_mexico",
+          "name": "Mexico City, Mexico",
+          "icon": "TR",
+          "description": "A city break in Mexico. What would you explore first in Mexico City?"
+        },
+        {
+          "id": "travel_rio_de_janeiro_brazil",
+          "name": "Rio de Janeiro, Brazil",
+          "icon": "TR",
+          "description": "A city break in Brazil. What would you explore first in Rio de Janeiro?"
+        },
+        {
+          "id": "travel_buenos_aires_argentina",
+          "name": "Buenos Aires, Argentina",
+          "icon": "TR",
+          "description": "A city break in Argentina. What would you explore first in Buenos Aires?"
+        },
+        {
+          "id": "travel_reykjavik_iceland",
+          "name": "Reykjavik, Iceland",
+          "icon": "TR",
+          "description": "A city break in Iceland. What would you explore first in Reykjavik?"
+        },
+        {
+          "id": "travel_copenhagen_denmark",
+          "name": "Copenhagen, Denmark",
+          "icon": "TR",
+          "description": "A city break in Denmark. What would you explore first in Copenhagen?"
+        },
+        {
+          "id": "travel_amsterdam_netherlands",
+          "name": "Amsterdam, Netherlands",
+          "icon": "TR",
+          "description": "A city break in Netherlands. What would you explore first in Amsterdam?"
+        },
+        {
+          "id": "travel_paris_france",
+          "name": "Paris, France",
+          "icon": "TR",
+          "description": "A city break in France. What would you explore first in Paris?"
+        },
+        {
+          "id": "travel_barcelona_spain",
+          "name": "Barcelona, Spain",
+          "icon": "TR",
+          "description": "A city break in Spain. What would you explore first in Barcelona?"
+        },
+        {
+          "id": "travel_rome_italy",
+          "name": "Rome, Italy",
+          "icon": "TR",
+          "description": "A city break in Italy. What would you explore first in Rome?"
+        },
+        {
+          "id": "travel_istanbul_t_rkiye",
+          "name": "Istanbul, T?rkiye",
+          "icon": "TR",
+          "description": "A city break in T?rkiye. What would you explore first in Istanbul?"
+        },
+        {
+          "id": "travel_marrakech_morocco",
+          "name": "Marrakech, Morocco",
+          "icon": "TR",
+          "description": "A city break in Morocco. What would you explore first in Marrakech?"
+        },
+        {
+          "id": "travel_cape_town_south_africa",
+          "name": "Cape Town, South Africa",
+          "icon": "TR",
+          "description": "A city break in South Africa. What would you explore first in Cape Town?"
+        },
+        {
+          "id": "travel_japan",
+          "name": "Japan",
+          "icon": "TR",
+          "description": "A country to discover. Would Japan make your travel wish list?"
+        },
+        {
+          "id": "travel_south_korea",
+          "name": "South Korea",
+          "icon": "TR",
+          "description": "A country to discover. Would South Korea make your travel wish list?"
+        },
+        {
+          "id": "travel_thailand",
+          "name": "Thailand",
+          "icon": "TR",
+          "description": "A country to discover. Would Thailand make your travel wish list?"
+        },
+        {
+          "id": "travel_vietnam",
+          "name": "Vietnam",
+          "icon": "TR",
+          "description": "A country to discover. Would Vietnam make your travel wish list?"
+        },
+        {
+          "id": "travel_india",
+          "name": "India",
+          "icon": "TR",
+          "description": "A country to discover. Would India make your travel wish list?"
+        },
+        {
+          "id": "travel_australia",
+          "name": "Australia",
+          "icon": "TR",
+          "description": "A country to discover. Would Australia make your travel wish list?"
+        },
+        {
+          "id": "travel_new_zealand",
+          "name": "New Zealand",
+          "icon": "TR",
+          "description": "A country to discover. Would New Zealand make your travel wish list?"
+        },
+        {
+          "id": "travel_canada",
+          "name": "Canada",
+          "icon": "TR",
+          "description": "A country to discover. Would Canada make your travel wish list?"
+        },
+        {
+          "id": "travel_united_states",
+          "name": "United States",
+          "icon": "TR",
+          "description": "A country to discover. Would United States make your travel wish list?"
+        },
+        {
+          "id": "travel_mexico",
+          "name": "Mexico",
+          "icon": "TR",
+          "description": "A country to discover. Would Mexico make your travel wish list?"
+        },
+        {
+          "id": "travel_brazil",
+          "name": "Brazil",
+          "icon": "TR",
+          "description": "A country to discover. Would Brazil make your travel wish list?"
+        },
+        {
+          "id": "travel_argentina",
+          "name": "Argentina",
+          "icon": "TR",
+          "description": "A country to discover. Would Argentina make your travel wish list?"
+        },
+        {
+          "id": "travel_iceland",
+          "name": "Iceland",
+          "icon": "TR",
+          "description": "A country to discover. Would Iceland make your travel wish list?"
+        },
+        {
+          "id": "travel_norway",
+          "name": "Norway",
+          "icon": "TR",
+          "description": "A country to discover. Would Norway make your travel wish list?"
+        },
+        {
+          "id": "travel_sweden",
+          "name": "Sweden",
+          "icon": "TR",
+          "description": "A country to discover. Would Sweden make your travel wish list?"
+        },
+        {
+          "id": "travel_denmark",
+          "name": "Denmark",
+          "icon": "TR",
+          "description": "A country to discover. Would Denmark make your travel wish list?"
+        },
+        {
+          "id": "travel_netherlands",
+          "name": "Netherlands",
+          "icon": "TR",
+          "description": "A country to discover. Would Netherlands make your travel wish list?"
+        },
+        {
+          "id": "travel_france",
+          "name": "France",
+          "icon": "TR",
+          "description": "A country to discover. Would France make your travel wish list?"
+        },
+        {
+          "id": "travel_spain",
+          "name": "Spain",
+          "icon": "TR",
+          "description": "A country to discover. Would Spain make your travel wish list?"
+        },
+        {
+          "id": "travel_italy",
+          "name": "Italy",
+          "icon": "TR",
+          "description": "A country to discover. Would Italy make your travel wish list?"
+        },
+        {
+          "id": "travel_greece",
+          "name": "Greece",
+          "icon": "TR",
+          "description": "A country to discover. Would Greece make your travel wish list?"
+        },
+        {
+          "id": "travel_t_rkiye",
+          "name": "T?rkiye",
+          "icon": "TR",
+          "description": "A country to discover. Would T?rkiye make your travel wish list?"
+        },
+        {
+          "id": "travel_morocco",
+          "name": "Morocco",
+          "icon": "TR",
+          "description": "A country to discover. Would Morocco make your travel wish list?"
+        },
+        {
+          "id": "travel_kenya",
+          "name": "Kenya",
+          "icon": "TR",
+          "description": "A country to discover. Would Kenya make your travel wish list?"
+        },
+        {
+          "id": "travel_south_africa",
+          "name": "South Africa",
+          "icon": "TR",
+          "description": "A country to discover. Would South Africa make your travel wish list?"
+        }
+      ]
+    },
+    "screen": {
+      "name": "Movies & TV",
+      "tagline": "What belongs on your watchlist?",
+      "icon": "TV",
+      "accent": "#c4a0f4",
+      "items": [
+        {
+          "id": "screen_spirited_away",
+          "name": "Spirited Away",
+          "icon": "TV",
+          "description": "Spirited Away is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_lion_king",
+          "name": "The Lion King",
+          "icon": "TV",
+          "description": "The Lion King is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_toy_story",
+          "name": "Toy Story",
+          "icon": "TV",
+          "description": "Toy Story is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_finding_nemo",
+          "name": "Finding Nemo",
+          "icon": "TV",
+          "description": "Finding Nemo is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_shrek",
+          "name": "Shrek",
+          "icon": "TV",
+          "description": "Shrek is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_coco",
+          "name": "Coco",
+          "icon": "TV",
+          "description": "Coco is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_inside_out",
+          "name": "Inside Out",
+          "icon": "TV",
+          "description": "Inside Out is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_incredibles",
+          "name": "The Incredibles",
+          "icon": "TV",
+          "description": "The Incredibles is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_spider_man_into_the_spider_verse",
+          "name": "Spider-Man: Into the Spider-Verse",
+          "icon": "TV",
+          "description": "Spider-Man: Into the Spider-Verse is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_paddington_2",
+          "name": "Paddington 2",
+          "icon": "TV",
+          "description": "Paddington 2 is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_princess_bride",
+          "name": "The Princess Bride",
+          "icon": "TV",
+          "description": "The Princess Bride is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_jurassic_park",
+          "name": "Jurassic Park",
+          "icon": "TV",
+          "description": "Jurassic Park is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_back_to_the_future",
+          "name": "Back to the Future",
+          "icon": "TV",
+          "description": "Back to the Future is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_e_t_the_extra_terrestrial",
+          "name": "E.T. the Extra-Terrestrial",
+          "icon": "TV",
+          "description": "E.T. the Extra-Terrestrial is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_wizard_of_oz",
+          "name": "The Wizard of Oz",
+          "icon": "TV",
+          "description": "The Wizard of Oz is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_home_alone",
+          "name": "Home Alone",
+          "icon": "TV",
+          "description": "Home Alone is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_grand_budapest_hotel",
+          "name": "The Grand Budapest Hotel",
+          "icon": "TV",
+          "description": "The Grand Budapest Hotel is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_knives_out",
+          "name": "Knives Out",
+          "icon": "TV",
+          "description": "Knives Out is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_princess_diaries",
+          "name": "The Princess Diaries",
+          "icon": "TV",
+          "description": "The Princess Diaries is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_legally_blonde",
+          "name": "Legally Blonde",
+          "icon": "TV",
+          "description": "Legally Blonde is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_devil_wears_prada",
+          "name": "The Devil Wears Prada",
+          "icon": "TV",
+          "description": "The Devil Wears Prada is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_truman_show",
+          "name": "The Truman Show",
+          "icon": "TV",
+          "description": "The Truman Show is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_groundhog_day",
+          "name": "Groundhog Day",
+          "icon": "TV",
+          "description": "Groundhog Day is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_shawshank_redemption",
+          "name": "The Shawshank Redemption",
+          "icon": "TV",
+          "description": "The Shawshank Redemption is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_lord_of_the_rings_the_fellowship_of_the_ring",
+          "name": "The Lord of the Rings: The Fellowship of the Ring",
+          "icon": "TV",
+          "description": "The Lord of the Rings: The Fellowship of the Ring is a film pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_avatar_the_last_airbender",
+          "name": "Avatar: The Last Airbender",
+          "icon": "TV",
+          "description": "Avatar: The Last Airbender is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_bluey",
+          "name": "Bluey",
+          "icon": "TV",
+          "description": "Bluey is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_gravity_falls",
+          "name": "Gravity Falls",
+          "icon": "TV",
+          "description": "Gravity Falls is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_simpsons",
+          "name": "The Simpsons",
+          "icon": "TV",
+          "description": "The Simpsons is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_friends",
+          "name": "Friends",
+          "icon": "TV",
+          "description": "Friends is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_office",
+          "name": "The Office",
+          "icon": "TV",
+          "description": "The Office is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_brooklyn_nine_nine",
+          "name": "Brooklyn Nine-Nine",
+          "icon": "TV",
+          "description": "Brooklyn Nine-Nine is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_parks_and_recreation",
+          "name": "Parks and Recreation",
+          "icon": "TV",
+          "description": "Parks and Recreation is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_stranger_things",
+          "name": "Stranger Things",
+          "icon": "TV",
+          "description": "Stranger Things is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_wednesday",
+          "name": "Wednesday",
+          "icon": "TV",
+          "description": "Wednesday is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_good_place",
+          "name": "The Good Place",
+          "icon": "TV",
+          "description": "The Good Place is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_sherlock",
+          "name": "Sherlock",
+          "icon": "TV",
+          "description": "Sherlock is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_doctor_who",
+          "name": "Doctor Who",
+          "icon": "TV",
+          "description": "Doctor Who is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_star_trek_the_next_generation",
+          "name": "Star Trek: The Next Generation",
+          "icon": "TV",
+          "description": "Star Trek: The Next Generation is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_mandalorian",
+          "name": "The Mandalorian",
+          "icon": "TV",
+          "description": "The Mandalorian is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_andor",
+          "name": "Andor",
+          "icon": "TV",
+          "description": "Andor is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_the_queen_s_gambit",
+          "name": "The Queen's Gambit",
+          "icon": "TV",
+          "description": "The Queen's Gambit is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_abbott_elementary",
+          "name": "Abbott Elementary",
+          "icon": "TV",
+          "description": "Abbott Elementary is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_ted_lasso",
+          "name": "Ted Lasso",
+          "icon": "TV",
+          "description": "Ted Lasso is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_only_murders_in_the_building",
+          "name": "Only Murders in the Building",
+          "icon": "TV",
+          "description": "Only Murders in the Building is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_gilmore_girls",
+          "name": "Gilmore Girls",
+          "icon": "TV",
+          "description": "Gilmore Girls is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_community",
+          "name": "Community",
+          "icon": "TV",
+          "description": "Community is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_schitt_s_creek",
+          "name": "Schitt's Creek",
+          "icon": "TV",
+          "description": "Schitt's Creek is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_planet_earth",
+          "name": "Planet Earth",
+          "icon": "TV",
+          "description": "Planet Earth is a series pick. Would you watch it again?"
+        },
+        {
+          "id": "screen_mythbusters",
+          "name": "MythBusters",
+          "icon": "TV",
+          "description": "MythBusters is a series pick. Would you watch it again?"
+        }
+      ]
+    },
+    "music": {
+      "name": "Music Artists",
+      "tagline": "Who makes the playlist?",
+      "icon": "MU",
+      "accent": "#efc57d",
+      "items": [
+        {
+          "id": "music_the_beatles",
+          "name": "The Beatles",
+          "icon": "MU",
+          "description": "The Beatles: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_queen",
+          "name": "Queen",
+          "icon": "MU",
+          "description": "Queen: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_abba",
+          "name": "ABBA",
+          "icon": "MU",
+          "description": "ABBA: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_fleetwood_mac",
+          "name": "Fleetwood Mac",
+          "icon": "MU",
+          "description": "Fleetwood Mac: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_the_rolling_stones",
+          "name": "The Rolling Stones",
+          "icon": "MU",
+          "description": "The Rolling Stones: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_david_bowie",
+          "name": "David Bowie",
+          "icon": "MU",
+          "description": "David Bowie: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_elton_john",
+          "name": "Elton John",
+          "icon": "MU",
+          "description": "Elton John: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_stevie_wonder",
+          "name": "Stevie Wonder",
+          "icon": "MU",
+          "description": "Stevie Wonder: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_whitney_houston",
+          "name": "Whitney Houston",
+          "icon": "MU",
+          "description": "Whitney Houston: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_beyonc",
+          "name": "Beyonc?",
+          "icon": "MU",
+          "description": "Beyonc?: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_taylor_swift",
+          "name": "Taylor Swift",
+          "icon": "MU",
+          "description": "Taylor Swift: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_adele",
+          "name": "Adele",
+          "icon": "MU",
+          "description": "Adele: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_bruno_mars",
+          "name": "Bruno Mars",
+          "icon": "MU",
+          "description": "Bruno Mars: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_billie_eilish",
+          "name": "Billie Eilish",
+          "icon": "MU",
+          "description": "Billie Eilish: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_dua_lipa",
+          "name": "Dua Lipa",
+          "icon": "MU",
+          "description": "Dua Lipa: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_lady_gaga",
+          "name": "Lady Gaga",
+          "icon": "MU",
+          "description": "Lady Gaga: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_rihanna",
+          "name": "Rihanna",
+          "icon": "MU",
+          "description": "Rihanna: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_kendrick_lamar",
+          "name": "Kendrick Lamar",
+          "icon": "MU",
+          "description": "Kendrick Lamar: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_eminem",
+          "name": "Eminem",
+          "icon": "MU",
+          "description": "Eminem: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_jay_z",
+          "name": "Jay-Z",
+          "icon": "MU",
+          "description": "Jay-Z: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_bob_marley",
+          "name": "Bob Marley",
+          "icon": "MU",
+          "description": "Bob Marley: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_prince",
+          "name": "Prince",
+          "icon": "MU",
+          "description": "Prince: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_madonna",
+          "name": "Madonna",
+          "icon": "MU",
+          "description": "Madonna: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_michael_jackson",
+          "name": "Michael Jackson",
+          "icon": "MU",
+          "description": "Michael Jackson: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_aretha_franklin",
+          "name": "Aretha Franklin",
+          "icon": "MU",
+          "description": "Aretha Franklin: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_nirvana",
+          "name": "Nirvana",
+          "icon": "MU",
+          "description": "Nirvana: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_spice_girls",
+          "name": "Spice Girls",
+          "icon": "MU",
+          "description": "Spice Girls: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_coldplay",
+          "name": "Coldplay",
+          "icon": "MU",
+          "description": "Coldplay: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_u2",
+          "name": "U2",
+          "icon": "MU",
+          "description": "U2: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_radiohead",
+          "name": "Radiohead",
+          "icon": "MU",
+          "description": "Radiohead: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_the_cure",
+          "name": "The Cure",
+          "icon": "MU",
+          "description": "The Cure: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_metallica",
+          "name": "Metallica",
+          "icon": "MU",
+          "description": "Metallica: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_ac_dc",
+          "name": "AC/DC",
+          "icon": "MU",
+          "description": "AC/DC: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_blackpink",
+          "name": "BLACKPINK",
+          "icon": "MU",
+          "description": "BLACKPINK: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_bts",
+          "name": "BTS",
+          "icon": "MU",
+          "description": "BTS: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_the_weeknd",
+          "name": "The Weeknd",
+          "icon": "MU",
+          "description": "The Weeknd: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_outkast",
+          "name": "OutKast",
+          "icon": "MU",
+          "description": "OutKast: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_daft_punk",
+          "name": "Daft Punk",
+          "icon": "MU",
+          "description": "Daft Punk: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_gorillaz",
+          "name": "Gorillaz",
+          "icon": "MU",
+          "description": "Gorillaz: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_fleet_foxes",
+          "name": "Fleet Foxes",
+          "icon": "MU",
+          "description": "Fleet Foxes: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_arctic_monkeys",
+          "name": "Arctic Monkeys",
+          "icon": "MU",
+          "description": "Arctic Monkeys: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_the_beach_boys",
+          "name": "The Beach Boys",
+          "icon": "MU",
+          "description": "The Beach Boys: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_marvin_gaye",
+          "name": "Marvin Gaye",
+          "icon": "MU",
+          "description": "Marvin Gaye: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_shakira",
+          "name": "Shakira",
+          "icon": "MU",
+          "description": "Shakira: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_bad_bunny",
+          "name": "Bad Bunny",
+          "icon": "MU",
+          "description": "Bad Bunny: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_a_r_rahman",
+          "name": "A. R. Rahman",
+          "icon": "MU",
+          "description": "A. R. Rahman: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_celine_dion",
+          "name": "Celine Dion",
+          "icon": "MU",
+          "description": "Celine Dion: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_cher",
+          "name": "Cher",
+          "icon": "MU",
+          "description": "Cher: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_johnny_cash",
+          "name": "Johnny Cash",
+          "icon": "MU",
+          "description": "Johnny Cash: an artist to put on the playlist. Would you listen live?"
+        },
+        {
+          "id": "music_the_jackson_5",
+          "name": "The Jackson 5",
+          "icon": "MU",
+          "description": "The Jackson 5: an artist to put on the playlist. Would you listen live?"
+        }
+      ]
+    },
+    "hobbies": {
+      "name": "Hobbies & Activities",
+      "tagline": "What do you love doing?",
+      "icon": "GO",
+      "accent": "#79dbba",
+      "items": [
+        {
+          "id": "hobbies_cooking_a_new_recipe",
+          "name": "Cooking a new recipe",
+          "icon": "GO",
+          "description": "Cooking a new recipe: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_baking_bread_or_pastries",
+          "name": "Baking bread or pastries",
+          "icon": "GO",
+          "description": "Baking bread or pastries: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_gardening",
+          "name": "Gardening",
+          "icon": "GO",
+          "description": "Gardening: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_houseplants",
+          "name": "Houseplants",
+          "icon": "GO",
+          "description": "Houseplants: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_hiking",
+          "name": "Hiking",
+          "icon": "GO",
+          "description": "Hiking: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_camping",
+          "name": "Camping",
+          "icon": "GO",
+          "description": "Camping: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_birdwatching",
+          "name": "Birdwatching",
+          "icon": "GO",
+          "description": "Birdwatching: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_photography",
+          "name": "Photography",
+          "icon": "GO",
+          "description": "Photography: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_drawing",
+          "name": "Drawing",
+          "icon": "GO",
+          "description": "Drawing: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_painting",
+          "name": "Painting",
+          "icon": "GO",
+          "description": "Painting: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_pottery",
+          "name": "Pottery",
+          "icon": "GO",
+          "description": "Pottery: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_knitting_or_crochet",
+          "name": "Knitting or crochet",
+          "icon": "GO",
+          "description": "Knitting or crochet: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_sewing",
+          "name": "Sewing",
+          "icon": "GO",
+          "description": "Sewing: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_reading_novels",
+          "name": "Reading novels",
+          "icon": "GO",
+          "description": "Reading novels: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_writing_stories",
+          "name": "Writing stories",
+          "icon": "GO",
+          "description": "Writing stories: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_journaling",
+          "name": "Journaling",
+          "icon": "GO",
+          "description": "Journaling: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_playing_an_instrument",
+          "name": "Playing an instrument",
+          "icon": "GO",
+          "description": "Playing an instrument: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_singing",
+          "name": "Singing",
+          "icon": "GO",
+          "description": "Singing: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_choir",
+          "name": "Choir",
+          "icon": "GO",
+          "description": "Choir: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_dancing",
+          "name": "Dancing",
+          "icon": "GO",
+          "description": "Dancing: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_karaoke",
+          "name": "Karaoke",
+          "icon": "GO",
+          "description": "Karaoke: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_board_games",
+          "name": "Board games",
+          "icon": "GO",
+          "description": "Board games: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_tabletop_role_playing",
+          "name": "Tabletop role-playing",
+          "icon": "GO",
+          "description": "Tabletop role-playing: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_video_games",
+          "name": "Video games",
+          "icon": "GO",
+          "description": "Video games: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_building_model_kits",
+          "name": "Building model kits",
+          "icon": "GO",
+          "description": "Building model kits: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_puzzles",
+          "name": "Puzzles",
+          "icon": "GO",
+          "description": "Puzzles: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_chess",
+          "name": "Chess",
+          "icon": "GO",
+          "description": "Chess: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_running",
+          "name": "Running",
+          "icon": "GO",
+          "description": "Running: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_walking",
+          "name": "Walking",
+          "icon": "GO",
+          "description": "Walking: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_cycling",
+          "name": "Cycling",
+          "icon": "GO",
+          "description": "Cycling: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_swimming",
+          "name": "Swimming",
+          "icon": "GO",
+          "description": "Swimming: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_yoga",
+          "name": "Yoga",
+          "icon": "GO",
+          "description": "Yoga: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_strength_training",
+          "name": "Strength training",
+          "icon": "GO",
+          "description": "Strength training: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_martial_arts",
+          "name": "Martial arts",
+          "icon": "GO",
+          "description": "Martial arts: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_team_sports",
+          "name": "Team sports",
+          "icon": "GO",
+          "description": "Team sports: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_rock_climbing",
+          "name": "Rock climbing",
+          "icon": "GO",
+          "description": "Rock climbing: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_fishing",
+          "name": "Fishing",
+          "icon": "GO",
+          "description": "Fishing: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_surfing",
+          "name": "Surfing",
+          "icon": "GO",
+          "description": "Surfing: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_skateboarding",
+          "name": "Skateboarding",
+          "icon": "GO",
+          "description": "Skateboarding: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_skiing_or_snowboarding",
+          "name": "Skiing or snowboarding",
+          "icon": "GO",
+          "description": "Skiing or snowboarding: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_travel_planning",
+          "name": "Travel planning",
+          "icon": "GO",
+          "description": "Travel planning: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_learning_a_language",
+          "name": "Learning a language",
+          "icon": "GO",
+          "description": "Learning a language: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_visiting_museums",
+          "name": "Visiting museums",
+          "icon": "GO",
+          "description": "Visiting museums: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_watching_films",
+          "name": "Watching films",
+          "icon": "GO",
+          "description": "Watching films: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_collecting_records",
+          "name": "Collecting records",
+          "icon": "GO",
+          "description": "Collecting records: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_making_playlists",
+          "name": "Making playlists",
+          "icon": "GO",
+          "description": "Making playlists: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_volunteering",
+          "name": "Volunteering",
+          "icon": "GO",
+          "description": "Volunteering: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_home_diy",
+          "name": "Home DIY",
+          "icon": "GO",
+          "description": "Home DIY: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_car_restoration",
+          "name": "Car restoration",
+          "icon": "GO",
+          "description": "Car restoration: a hobby to try or keep. How much is it your thing?"
+        },
+        {
+          "id": "hobbies_trying_new_restaurants",
+          "name": "Trying new restaurants",
+          "icon": "GO",
+          "description": "Trying new restaurants: a hobby to try or keep. How much is it your thing?"
+        }
+      ]
+    }
+  }
+}

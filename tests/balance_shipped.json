@@ -1,0 +1,32 @@
+[
+	{
+		"draws": 2,
+		"hp_decisions_including_draws": 22,
+		"knockouts": 378,
+		"matches": 400,
+		"mean_plays": 25.015,
+		"median_plays": 25,
+		"p10_plays": 13,
+		"p1_wins": 223,
+		"p2_wins": 175,
+		"p90_plays": 38,
+		"policy": "random cards",
+		"rules": "shipped",
+		"stalled": 0
+	},
+	{
+		"draws": 0,
+		"hp_decisions_including_draws": 0,
+		"knockouts": 400,
+		"matches": 400,
+		"mean_plays": 6.6225,
+		"median_plays": 7,
+		"p10_plays": 5,
+		"p1_wins": 275,
+		"p2_wins": 125,
+		"p90_plays": 8,
+		"policy": "known rankings, highest base damage",
+		"rules": "shipped",
+		"stalled": 0
+	}
+]

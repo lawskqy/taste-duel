@@ -1,188 +1,272 @@
 [gd_scene format=3 uid="uid://ikjcknxwvr6e"]
+[ext_resource type="Script" path="res://BattleController.gd" id="1"]
+[ext_resource type="Script" path="res://Player.gd" id="2"]
+[ext_resource type="Script" path="res://WinScreen.gd" id="3"]
+[ext_resource type="Texture2D" path="res://table_example.png" id="4"]
+[ext_resource type="Texture2D" path="res://player1.jpg" id="5"]
+[ext_resource type="Texture2D" path="res://player2.jpg" id="6"]
 
-[ext_resource type="Script" uid="uid://s4r6l6y8rb81" path="res://BattleController.gd" id="1_6t8i5"]
-[ext_resource type="Texture2D" uid="uid://dw762y0wi2cvl" path="res://table_example.png" id="1_7sfm4"]
-[ext_resource type="Texture2D" uid="uid://bewseioamoe04" path="res://deck.jpg" id="2_6t8i5"]
-[ext_resource type="Texture2D" uid="uid://x3e3e1wnn8v5" path="res://player1.jpg" id="2_i431l"]
-[ext_resource type="Texture2D" uid="uid://slm0f1s3k3up" path="res://player2.jpg" id="3_6t8i5"]
-[ext_resource type="Script" uid="uid://bxugqnugtnuf1" path="res://Player.gd" id="4_dw4jg"]
-[ext_resource type="Script" uid="uid://d1oo40a32knli" path="res://WinScreen.gd" id="7_0npn6"]
+[sub_resource type="StyleBoxFlat" id="ModalPanel"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.09, 0.16, 0.18, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.55, 0.57, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_left = 8
+corner_radius_bottom_right = 8
 
-[sub_resource type="GDScript" id="GDScript_0npn6"]
-script/source = "extends Sprite2D
-"
+[node name="Battle" type="Node2D"]
+script = ExtResource("1")
 
-[node name="Battle" type="Node2D" unique_id=1050492797]
-script = ExtResource("1_6t8i5")
-
-[node name="Table" type="Node2D" parent="." unique_id=534566681]
-
-[node name="Sprite2D" type="Sprite2D" parent="Table" unique_id=2090773483]
-position = Vector2(320, 70)
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("1_7sfm4")
-centered = false
-
-[node name="Decks" type="Node2D" parent="." unique_id=1794572149]
-
-[node name="CardDeck" type="Node2D" parent="Decks" unique_id=1268150920]
-
-[node name="cardDeck" type="Sprite2D" parent="Decks/CardDeck" unique_id=148701387]
-position = Vector2(452.99997, 159.99998)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("2_6t8i5")
-
-[node name="Count" type="Label" parent="Decks/CardDeck" unique_id=751487047]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="CardList" type="VBoxContainer" parent="Decks/CardDeck" unique_id=1854682710]
-custom_minimum_size = Vector2(200, 700)
-offset_left = 1020.0
-offset_top = 10.0
-offset_right = 1220.0
-offset_bottom = 710.0
-
-[node name="CardDeck2" type="Node2D" parent="Decks" unique_id=1199455354]
-
-[node name="cardDeck2" type="Sprite2D" parent="Decks/CardDeck2" unique_id=1533223692]
-position = Vector2(688.99994, 421)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("2_6t8i5")
-
-[node name="Count" type="Label" parent="Decks/CardDeck2" unique_id=103334334]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="CardList" type="VBoxContainer" parent="Decks/CardDeck2" unique_id=381027010]
-custom_minimum_size = Vector2(200, 700)
-offset_left = 60.0
-offset_top = 10.0
-offset_right = 260.0
-offset_bottom = 710.0
-
-[node name="Background" type="CanvasLayer" parent="." unique_id=1832928434]
+[node name="Background" type="CanvasLayer" parent="."]
 layer = -1
 
-[node name="ColorRect" type="ColorRect" parent="Background" unique_id=1187808320]
+[node name="ColorRect" type="ColorRect" parent="Background"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.79607844, 1, 1, 1)
+mouse_filter = 2
+color = Color(0.08, 0.20, 0.22, 1)
 
-[node name="Players" type="Node2D" parent="." unique_id=1411646162]
+[node name="Table" type="TextureRect" parent="."]
+offset_left = 350.0
+offset_top = 235.0
+offset_right = 930.0
+offset_bottom = 495.0
+texture = ExtResource("4")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+modulate = Color(1, 1, 1, 0.45)
 
-[node name="Player2" type="Node2D" parent="Players" unique_id=78822905]
-script = ExtResource("4_dw4jg")
+[node name="Decks" type="Node2D" parent="."]
 
-[node name="Player2" type="Sprite2D" parent="Players/Player2" unique_id=896986197]
-position = Vector2(570, 109)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_6t8i5")
 
-[node name="BuffContainer" type="HBoxContainer" parent="Players/Player2" unique_id=1180574846]
-offset_left = 628.0
-offset_top = 27.0
-offset_right = 668.0
-offset_bottom = 67.0
+[node name="CardDeck" type="Node2D" parent="Decks"]
 
-[node name="HP" type="ProgressBar" parent="Players/Player2" unique_id=1678379963]
-custom_minimum_size = Vector2(100, 10)
-offset_left = 517.0
-offset_top = 27.0
-offset_right = 617.0
-offset_bottom = 54.0
+
+[node name="Count" type="Label" parent="Decks/CardDeck"]
+offset_left = 944.0
+offset_top = 32.0
+offset_right = 1260.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 20
+
+[node name="Scroll" type="ScrollContainer" parent="Decks/CardDeck"]
+offset_left = 944.0
+offset_top = 72.0
+offset_right = 1260.0
+offset_bottom = 700.0
+horizontal_scroll_mode = 0
+
+[node name="CardList" type="VBoxContainer" parent="Decks/CardDeck/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CardDeck2" type="Node2D" parent="Decks"]
+
+
+[node name="Count" type="Label" parent="Decks/CardDeck2"]
+offset_left = 20.0
+offset_top = 32.0
+offset_right = 336.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 20
+
+[node name="Scroll" type="ScrollContainer" parent="Decks/CardDeck2"]
+offset_left = 20.0
+offset_top = 72.0
+offset_right = 336.0
+offset_bottom = 700.0
+horizontal_scroll_mode = 0
+
+[node name="CardList" type="VBoxContainer" parent="Decks/CardDeck2/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Players" type="Node2D" parent="."]
+
+
+[node name="Player1" type="Node2D" parent="Players"]
+script = ExtResource("2")
+
+[node name="Player1" type="TextureRect" parent="Players/Player1"]
+offset_left = 368.0
+offset_top = 530.0
+offset_right = 458.0
+offset_bottom = 620.0
+texture = ExtResource("5")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="HPText" type="Label" parent="Players/Player1"]
+offset_left = 474.0
+offset_top = 530.0
+offset_right = 914.0
+offset_bottom = 556.0
+theme_override_font_sizes/font_size = 20
+
+[node name="HP" type="ProgressBar" parent="Players/Player1"]
+offset_left = 474.0
+offset_top = 562.0
+offset_right = 894.0
+offset_bottom = 586.0
 value = 100.0
+show_percentage = false
 
-[node name="Player1" type="Node2D" parent="Players" unique_id=1654559228]
-script = ExtResource("4_dw4jg")
+[node name="Buffs" type="Label" parent="Players/Player1"]
+offset_left = 368.0
+offset_top = 628.0
+offset_right = 912.0
+offset_bottom = 704.0
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14
 
-[node name="Player1" type="Sprite2D" parent="Players/Player1" unique_id=276893190]
-position = Vector2(565.00006, 586.00006)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("2_i431l")
-script = SubResource("GDScript_0npn6")
+[node name="Player2" type="Node2D" parent="Players"]
+script = ExtResource("2")
 
-[node name="HP" type="ProgressBar" parent="Players/Player1" unique_id=1590625516]
-custom_minimum_size = Vector2(100, 10)
-offset_left = 517.0
-offset_top = 501.0
-offset_right = 617.0
-offset_bottom = 528.0
+[node name="Player2" type="TextureRect" parent="Players/Player2"]
+offset_left = 368.0
+offset_top = 65.0
+offset_right = 458.0
+offset_bottom = 155.0
+texture = ExtResource("6")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="HPText" type="Label" parent="Players/Player2"]
+offset_left = 474.0
+offset_top = 65.0
+offset_right = 914.0
+offset_bottom = 91.0
+theme_override_font_sizes/font_size = 20
+
+[node name="HP" type="ProgressBar" parent="Players/Player2"]
+offset_left = 474.0
+offset_top = 97.0
+offset_right = 894.0
+offset_bottom = 121.0
 value = 100.0
+show_percentage = false
 
-[node name="BuffContainer" type="HBoxContainer" parent="Players/Player1" unique_id=1498868689]
-offset_left = 644.0
-offset_top = 499.0
-offset_right = 684.0
-offset_bottom = 539.0
+[node name="Buffs" type="Label" parent="Players/Player2"]
+offset_left = 368.0
+offset_top = 163.0
+offset_right = 912.0
+offset_bottom = 239.0
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14
 
-[node name="PlayedCards" type="Node2D" parent="." unique_id=308122102]
+[node name="PlayedCards" type="Node2D" parent="."]
+position = Vector2(540, 260)
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1679151322]
+[node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Turns" type="Label" parent="UI" unique_id=901691980]
-offset_right = 40.0
-offset_bottom = 23.0
 
-[node name="ActionButton" type="Button" parent="UI" unique_id=832597678]
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Turns" type="Label" parent="UI"]
+offset_left = 350.0
+offset_top = 16.0
+offset_right = 930.0
+offset_bottom = 48.0
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
 
-[node name="Effects" type="Label" parent="UI" unique_id=427376284]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Effects" type="Label" parent="UI"]
+offset_left = 365.0
+offset_top = 415.0
+offset_right = 915.0
+offset_bottom = 525.0
+autowrap_mode = 3
+horizontal_alignment = 1
+text = "Choose a card from your pool. Its power depends on your opponent’s ranking."
 
-[node name="WinScreen" type="CanvasLayer" parent="." unique_id=689427175]
+[node name="ReclaimPanel" type="PanelContainer" parent="UI"]
+theme_override_styles/panel = SubResource("ModalPanel")
+offset_left = 425.0
+offset_top = 150.0
+offset_right = 855.0
+offset_bottom = 560.0
 visible = false
-script = ExtResource("7_0npn6")
 
-[node name="Dim" type="ColorRect" parent="WinScreen" unique_id=982561653]
+[node name="VBox" type="VBoxContainer" parent="UI/ReclaimPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UI/ReclaimPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "Reclaim a card"
+
+[node name="Scroll" type="ScrollContainer" parent="UI/ReclaimPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Choices" type="VBoxContainer" parent="UI/ReclaimPanel/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Skip" type="Button" parent="UI/ReclaimPanel/VBox"]
+layout_mode = 2
+text = "Skip reclaim"
+
+[node name="WinScreen" type="CanvasLayer" parent="."]
+layer = 3
+visible = false
+script = ExtResource("3")
+
+[node name="Dim" type="ColorRect" parent="WinScreen"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.007843138, 0.007843138, 0.007843138, 0.654902)
+color = Color(0, 0, 0, 0.7)
 
-[node name="Panel" type="PanelContainer" parent="WinScreen/Dim" unique_id=1016878589]
-custom_minimum_size = Vector2(400, 220)
-layout_mode = 1
+[node name="Panel" type="PanelContainer" parent="WinScreen/Dim"]
+theme_override_styles/panel = SubResource("ModalPanel")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -260.0
+offset_top = -120.0
+offset_right = 260.0
+offset_bottom = 120.0
 
-[node name="VBox" type="VBoxContainer" parent="WinScreen/Dim/Panel" unique_id=980247231]
+[node name="VBox" type="VBoxContainer" parent="WinScreen/Dim/Panel"]
 layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 16
 
-[node name="TitleLabel" type="Label" parent="WinScreen/Dim/Panel/VBox" unique_id=1641576090]
+[node name="TitleLabel" type="Label" parent="WinScreen/Dim/Panel/VBox"]
 layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
 theme_override_font_sizes/font_size = 32
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="ReasonLabel" type="Label" parent="WinScreen/Dim/Panel/VBox" unique_id=776093870]
+[node name="ReasonLabel" type="Label" parent="WinScreen/Dim/Panel/VBox"]
 layout_mode = 2
 horizontal_alignment = 1
-vertical_alignment = 1
+autowrap_mode = 3
 
-[node name="HPLabel" type="Label" parent="WinScreen/Dim/Panel/VBox" unique_id=1562397657]
+[node name="HPLabel" type="Label" parent="WinScreen/Dim/Panel/VBox"]
 layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
 
-[node name="Spacer" type="Control" parent="WinScreen/Dim/Panel/VBox" unique_id=2144071889]
-custom_minimum_size = Vector2(0, 16)
-layout_mode = 2
-
-[node name="RestartButton" type="Button" parent="WinScreen/Dim/Panel/VBox" unique_id=294271872]
+[node name="RestartButton" type="Button" parent="WinScreen/Dim/Panel/VBox"]
 layout_mode = 2
 text = "Play Again"

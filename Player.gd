@@ -1,25 +1,45 @@
 class_name Player
 extends Node2D
 
+signal health_changed(before: int, after: int)
+
 var hp: int = 100
 var max_hp: int = 100
 var preferences: Dictionary = {}
-var player_effect_pool: Dictionary = {}
 var pool: Array = []
 var active_buffs: Array = []
 var active_buff_values: Dictionary = {}
+var bonus_turns: int = 0
+var last_effect: Dictionary = {}
+var reverse_next_effect: bool = false
 
-func setup(prefs: Dictionary, items: Array, effect_pool: Dictionary) -> void:
-	preferences = prefs
-	pool = items.duplicate(true)
+func setup(prefs: Dictionary, items: Array) -> void:
+	preferences = prefs.duplicate(true)
+	# Items are immutable catalog entries; the players own separate pool arrays.
+	pool = items.duplicate()
+	max_hp = 100
 	hp = max_hp
-	player_effect_pool = effect_pool.duplicate()
+	active_buffs.clear()
+	active_buff_values.clear()
+	bonus_turns = 0
+	last_effect.clear()
+	reverse_next_effect = false
 
 func take_damage(amount: int) -> void:
-	hp = max(0, hp - amount)
+	var before = hp
+	hp = max(0, hp - max(0, amount))
+	if hp != before:
+		health_changed.emit(before, hp)
 
 func heal(amount: int) -> void:
-	hp = min(max_hp, hp + amount)
+	var before = hp
+	if "no_heal" not in active_buffs:
+		hp = min(max_hp, hp + max(0, amount))
+	if hp != before:
+		health_changed.emit(before, hp)
+
+func has_item(item_id: String) -> bool:
+	return pool.any(func(item): return item.id == item_id)
 
 func is_alive() -> bool:
 	return hp > 0

@@ -1,0 +1,54 @@
+[
+	{
+		"draws": 0,
+		"matches": 400,
+		"mean_plays": 15.3325,
+		"median_plays": 15,
+		"p10_plays": 6,
+		"p1_wins": 208,
+		"p2_wins": 192,
+		"p90_plays": 26,
+		"policy": "random cards",
+		"rules": "original",
+		"stalled": 0
+	},
+	{
+		"draws": 0,
+		"matches": 400,
+		"mean_plays": 3.4125,
+		"median_plays": 3,
+		"p10_plays": 2,
+		"p1_wins": 281,
+		"p2_wins": 119,
+		"p90_plays": 5,
+		"policy": "known rankings, highest base damage",
+		"rules": "original",
+		"stalled": 0
+	},
+	{
+		"draws": 2,
+		"matches": 400,
+		"mean_plays": 29.91,
+		"median_plays": 31,
+		"p10_plays": 17,
+		"p1_wins": 214,
+		"p2_wins": 184,
+		"p90_plays": 41,
+		"policy": "random cards",
+		"rules": "balanced",
+		"stalled": 0
+	},
+	{
+		"draws": 0,
+		"matches": 400,
+		"mean_plays": 7.81,
+		"median_plays": 7,
+		"p10_plays": 5,
+		"p1_wins": 262,
+		"p2_wins": 138,
+		"p90_plays": 11,
+		"policy": "known rankings, highest base damage",
+		"rules": "balanced",
+		"stalled": 0
+	}
+]

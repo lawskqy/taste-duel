@@ -1,23 +1,44 @@
 [gd_scene format=3 uid="uid://ddqekkrm4dsg4"]
+[ext_resource type="Script" path="res://DishCard.gd" id="1"]
 
-[ext_resource type="Script" uid="uid://c51bgs6xsil6r" path="res://DishCard.gd" id="1_7ey6j"]
+[node name="DishCard" type="PanelContainer"]
+custom_minimum_size = Vector2(280, 48)
+size_flags_horizontal = 3
+script = ExtResource("1")
 
-[node name="DishCard" type="PanelContainer" unique_id=59150437]
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("1_7ey6j")
-
-[node name="HBox" type="HBoxContainer" parent="." unique_id=1786773032]
+[node name="HBox" type="HBoxContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="RankLabel" type="Label" parent="HBox" unique_id=1538491603]
+[node name="RankLabel" type="Label" parent="HBox"]
 layout_mode = 2
+custom_minimum_size = Vector2(18, 0)
+mouse_filter = 2
 
-[node name="DishIcon" type="TextureRect" parent="HBox" unique_id=1476768848]
-custom_minimum_size = Vector2(48, 48)
+[node name="DishIcon" type="TextureRect" parent="HBox"]
 layout_mode = 2
-expand_mode = 3
+custom_minimum_size = Vector2(44, 44)
+expand_mode = 1
 stretch_mode = 5
+mouse_filter = 2
 
-[node name="DishName" type="Label" parent="HBox" unique_id=1184206969]
+[node name="DishName" type="Label" parent="HBox"]
 layout_mode = 2
+size_flags_horizontal = 3
+clip_text = true
+mouse_filter = 2
+
+[node name="ArtMark" type="Label" parent="HBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(44, 44)
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 30
+mouse_filter = 2
+visible = false
+
+[node name="Power" type="Label" parent="HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+mouse_filter = 2
+visible = false
