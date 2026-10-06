@@ -56,14 +56,14 @@ modulate = Color(1, 1, 1, 0.45)
 
 [node name="Count" type="Label" parent="Decks/CardDeck"]
 offset_left = 944.0
-offset_top = 32.0
+offset_top = 58.0
 offset_right = 1260.0
-offset_bottom = 62.0
+offset_bottom = 88.0
 theme_override_font_sizes/font_size = 20
 
 [node name="Scroll" type="ScrollContainer" parent="Decks/CardDeck"]
 offset_left = 944.0
-offset_top = 72.0
+offset_top = 98.0
 offset_right = 1260.0
 offset_bottom = 700.0
 horizontal_scroll_mode = 0
@@ -77,14 +77,14 @@ size_flags_horizontal = 3
 
 [node name="Count" type="Label" parent="Decks/CardDeck2"]
 offset_left = 20.0
-offset_top = 32.0
+offset_top = 58.0
 offset_right = 336.0
-offset_bottom = 62.0
+offset_bottom = 88.0
 theme_override_font_sizes/font_size = 20
 
 [node name="Scroll" type="ScrollContainer" parent="Decks/CardDeck2"]
 offset_left = 20.0
-offset_top = 72.0
+offset_top = 98.0
 offset_right = 336.0
 offset_bottom = 700.0
 horizontal_scroll_mode = 0
@@ -169,7 +169,7 @@ autowrap_mode = 3
 theme_override_font_sizes/font_size = 14
 
 [node name="PlayedCards" type="Node2D" parent="."]
-position = Vector2(540, 260)
+position = Vector2(540, 252)
 
 [node name="UI" type="CanvasLayer" parent="."]
 

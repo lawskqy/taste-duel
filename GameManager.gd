@@ -10,7 +10,7 @@ var current_form_player: int = 1
 var reduce_motion: bool = false
 var sound_enabled: bool = true
 const AVATARS = ["Pepper", "Miso", "Byte", "Mochi"]
-const COLORS = [Color("ff8779"), Color("79dbba"), Color("c4a0f4"), Color("7bbcf2"), Color("efc57d")]
+const COLORS = [GameStyle.CORAL, GameStyle.MINT, GameStyle.LAVENDER, GameStyle.SKY, GameStyle.GOLD]
 var profiles: Array[Dictionary] = []
 var _sound_player: AudioStreamPlayer
 var _sounds: Dictionary = {}

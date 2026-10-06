@@ -44,11 +44,14 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	var radius = minf(size.x, size.y) * 0.43
-	draw_circle(size / 2, radius, Color(accent, 0.10))
-	draw_arc(size / 2, radius, 0, TAU, 64, Color(accent, 0.8 if active else 0.2), 2.0, true)
+	draw_circle(size / 2 + Vector2(0, 3), radius, Color(GameStyle.NIGHT_SHADOW, 0.12))
+	draw_circle(size / 2, radius, GameStyle.RAISED.lerp(accent, 0.24))
+	draw_arc(size / 2, radius, 0, TAU, 64, Color(GameStyle.LINE, 0.8 if active else 0.3), 2.0, true)
+	draw_arc(size / 2, radius - 5, PI * 1.12, PI * 1.55, 20, Color(GameStyle.CREAM, 0.55), 2.5, true)
 	if active:
 		var angle = 0.0 if GameManager.reduce_motion else _time * 0.7
-		draw_circle(size / 2 + Vector2.from_angle(angle) * radius, 4, accent)
+		draw_circle(size / 2 + Vector2.from_angle(angle) * radius, 5, GameStyle.PAPER)
+		draw_circle(size / 2 + Vector2.from_angle(angle) * radius, 3, GameStyle.LINE)
 
 func react(kind: String) -> void:
 	GameManager.play_sound(kind)

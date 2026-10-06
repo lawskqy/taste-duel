@@ -1,1 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="160" height="180" viewBox="0 0 160 180"><ellipse cx="80" cy="168" rx="53" ry="8" fill="#101b24" opacity=".4"/><path d="M27 158 Q24 111 53 105 L107 105 Q136 111 133 158 Q80 179 27 158Z" fill="#ff00ff" stroke="#172b38" stroke-width="5"/><path d="M55 110 L80 133 L105 110 L108 164 L52 164Z" fill="#f6ead4"/><path d="M62 111 L64 143 M98 111 L96 143" stroke="#d6bd94" stroke-width="5"/><circle cx="80" cy="148" r="8" fill="#ff00ff"/><path d="M35 62 L26 13 L63 39 Q79 33 98 39 L134 13 L125 63 Q139 110 80 123 Q21 112 35 62Z" fill="#ed9961" stroke="#172b38" stroke-width="5"/><path d="M35 29 L42 58 L57 44Z M125 29 L118 58 L103 44Z" fill="#653e45"/><path d="M38 81 Q57 73 80 97 Q103 73 122 81 Q118 116 80 118 Q42 113 38 81Z" fill="#fff0d2"/><path d="M73 92 L87 92 L80 101Z" fill="#172b38"/><ellipse cx="59" cy="81" rx="5" ry="7" fill="#172b38"/><ellipse cx="101" cy="81" rx="5" ry="7" fill="#172b38"/><circle cx="60" cy="79" r="1.5" fill="#fff"/><circle cx="102" cy="79" r="1.5" fill="#fff"/><path d="M71 103 Q80 112 89 103" fill="none" stroke="#714650" stroke-width="3" stroke-linecap="round"/></svg>
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="160" height="180" viewBox="0 0 160 180">
+<!-- Miso: round peach fox with a curled tail and a tiny neckerchief. -->
+<g stroke="#526b80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<ellipse cx="81" cy="169" rx="46" ry="6" fill="#526b80" opacity=".15" stroke="none"/>
+<path d="M111 145 Q145 144 142 112 Q158 131 143 153 Q129 170 110 160" fill="#dcb096"/>
+<path d="M140 117 Q143 133 129 139 Q139 139 144 131" fill="#eee7d9" stroke="none"/>
+<ellipse cx="62" cy="163" rx="12" ry="7" fill="#dcb096"/><ellipse cx="98" cy="163" rx="12" ry="7" fill="#dcb096"/>
+<path d="M48 120 Q80 108 110 121 L116 148 Q119 165 80 166 Q42 165 43 147Z" fill="#ff00ff"/>
+<path d="M61 121 L60 156 Q80 162 101 156 L99 121" fill="#eae7dc"/>
+<path d="M42 130 Q31 131 34 145 Q38 152 49 144 M115 130 Q127 132 124 145 Q120 152 112 144" fill="#dcb096"/>
+<path d="M44 54 Q28 46 32 18 Q35 9 46 19 L64 39 Q80 34 98 39 L116 18 Q128 9 131 22 Q135 46 119 56 Q136 79 126 100 Q115 122 80 124 Q44 122 33 101 Q23 78 44 54Z" fill="#dfb39b"/>
+<path d="M43 43 Q38 35 40 25 L55 42 M106 42 L122 25 Q124 37 117 44" fill="#d4969c" stroke="none"/>
+<path d="M34 86 Q47 74 64 88 L80 98 L96 88 Q113 74 128 86 Q127 116 80 121 Q34 116 34 86Z" fill="#eee8dc" stroke="none"/>
+<ellipse cx="52" cy="96" rx="9" ry="5" fill="#dca6a7" stroke="none"/><ellipse cx="109" cy="96" rx="9" ry="5" fill="#dca6a7" stroke="none"/>
+<path d="M54 82 Q60 75 66 82 M95 82 Q101 75 107 82" fill="none"/>
+<path d="M74 94 Q80 90 86 94 Q85 102 80 102 Q75 102 74 94" fill="#526b80" stroke="none"/>
+<path d="M80 102 Q74 110 69 104 M80 102 Q87 110 92 103" fill="none" stroke-width="2"/>
+<path d="M65 121 L80 130 L96 121 L88 141 L80 133 L73 142Z" fill="#aec6d9"/>
+</g></svg>

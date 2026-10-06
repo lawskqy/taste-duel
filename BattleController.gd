@@ -12,6 +12,8 @@ extends Node2D
 @onready var hp_bar_p2 = $Players/Player2/HP
 @onready var reclaim_panel = $UI/ReclaimPanel
 @onready var reclaim_list = $UI/ReclaimPanel/VBox/Scroll/Choices
+@onready var _hp_labels = [$Players/Player1/HPText, $Players/Player2/HPText]
+@onready var _buff_labels = [$Players/Player1/Buffs, $Players/Player2/Buffs]
 
 enum BattleState { WAITING_FOR_CARD, RESOLVING, WAITING_FOR_RECLAIM, BATTLE_OVER }
 var state = BattleState.WAITING_FOR_CARD
@@ -32,6 +34,20 @@ var _pool_label: Label
 var _history_panel: PanelContainer
 var _history_text: RichTextLabel
 var _settings_panel: PanelContainer
+var _leave_panel: PanelContainer
+var _pool_panel: PanelContainer
+var _pool_layer: CanvasLayer
+var _pool_title: Label
+var _pool_list: VBoxContainer
+var _pool_buttons: Array[Button] = []
+var _menu_buttons: Array[Button] = []
+var _toolbar: HBoxContainer
+var _table_stack: VBoxContainer
+var _player_stacks: Array[VBoxContainer] = []
+var _card_slot: Control
+var _turn_notice: Label
+var _turn_reasons: Array[String] = []
+var turn_history: Array[String] = []
 
 var available_effects: Dictionary = {}
 var used_effect_ids: Dictionary = {}
@@ -74,10 +90,11 @@ func _ready() -> void:
 	_style_battle()
 	player1.health_changed.connect(_health_feedback.bind(player1))
 	player2.health_changed.connect(_health_feedback.bind(player2))
-	$UI/ReclaimPanel/VBox/Skip.pressed.connect(_skip_reclaim)
+	reclaim_panel.get_node("VBox/Skip").pressed.connect(_skip_reclaim)
 	_reset_effect_pool()
 	_setup_from_game_manager()
 	_build_card_lists()
+	_build_pool_controls()
 	_update_hp_bars()
 	_update_ui()
 
@@ -121,7 +138,7 @@ func _clear_children(container: Node) -> void:
 		container.remove_child(child)
 		child.queue_free()
 
-func _populate_card_list(container: VBoxContainer, player: Player) -> void:
+func _populate_card_list(container: VBoxContainer, player: Player, close_pool_on_select: bool = false) -> void:
 	_clear_children(container)
 	for item in player.pool:
 		var row = HBoxContainer.new()
@@ -133,6 +150,7 @@ func _populate_card_list(container: VBoxContainer, player: Player) -> void:
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.texture = GameManager.get_texture(item.id)
 		if icon.texture == null:
+			icon.free()
 			var fallback = Label.new()
 			fallback.text = item.icon
 			fallback.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -156,6 +174,8 @@ func _populate_card_list(container: VBoxContainer, player: Player) -> void:
 		button.pressed.connect(func():
 			if get_current_player() == player:
 				select_item(item.id)
+				if close_pool_on_select and _pool_panel != null:
+					_pool_layer.visible = false
 		)
 		row.add_child(button)
 		container.add_child(row)
@@ -252,22 +272,36 @@ func _finish_turn() -> void:
 	if player1.pool.is_empty() and player2.pool.is_empty():
 		_end_battle_by_hp()
 		return
+	var previous_turn = current_turn
+	_turn_reasons.clear()
 	_advance_turn()
 	# Consume skipped turns automatically, including when the other pool is empty.
 	while true:
 		var player = get_current_player()
 		if player.pool.is_empty():
+			_turn_reasons.append("%s has no cards and cannot play." % _player_name(player))
 			player.bonus_turns = 0
+			player.bonus_turn_sources.clear()
+			player.skip_turn_source = ""
 			player.active_buffs.erase("no_heal")
 			player.active_buffs.erase("skip_turn")
 			current_turn = 1 - current_turn
 		elif "skip_turn" in player.active_buffs:
+			_turn_reasons.append("%s skips a turn%s." % [_player_name(player), " - " + player.skip_turn_source if not player.skip_turn_source.is_empty() else " (skip effect)"])
+			player.skip_turn_source = ""
 			player.active_buffs.erase("skip_turn")
 			player.active_buffs.erase("no_heal")
 			_advance_turn()
 		else:
 			break
 	state = BattleState.WAITING_FOR_CARD
+	var handoff = "%s plays again." % _player_name(get_current_player()) if current_turn == previous_turn else "%s plays next." % _player_name(get_current_player())
+	var explanation = "\n".join(_turn_reasons)
+	var notice = handoff + ("\n" + explanation if not explanation.is_empty() else "")
+	if _turn_notice:
+		_turn_notice.text = notice
+		_turn_notice.tooltip_text = notice
+	turn_history.append("After %s:\n%s" % [_last_played_name, notice])
 	_build_card_lists()
 	_update_ui()
 
@@ -275,6 +309,8 @@ func _advance_turn() -> void:
 	var player = get_current_player()
 	if player.bonus_turns > 0 and not player.pool.is_empty():
 		player.bonus_turns -= 1
+		var source: String = player.bonus_turn_sources.pop_front() if not player.bonus_turn_sources.is_empty() else "stored extra-turn effect"
+		_turn_reasons.append("%s uses a bonus turn - %s." % [_player_name(player), source])
 	else:
 		current_turn = 1 - current_turn
 
@@ -301,6 +337,8 @@ func _reset_effect_pool() -> void:
 	available_effects = effects_pool.duplicate(true)
 	used_effect_ids.clear()
 	effect_history.clear()
+	turn_history.clear()
+	_turn_reasons.clear()
 
 func draw_effect(amount: int) -> Array:
 	var available = available_effects.keys().filter(func(id): return not used_effect_ids.has(id))
@@ -351,6 +389,8 @@ func _apply_effect(effect: Dictionary, target: Player, other: Player) -> Player:
 			var buff_key = "skip_turn" if key == "enemy_skip_turn" else key
 			if buff_key not in recipient.active_buffs:
 				recipient.active_buffs.append(buff_key)
+			if buff_key == "skip_turn":
+				recipient.skip_turn_source = "%s from %s" % [effect.name, _last_played_name]
 			if typeof(value) == TYPE_FLOAT or typeof(value) == TYPE_INT:
 				recipient.active_buff_values[buff_key] = value
 		"instant":
@@ -385,8 +425,10 @@ func _apply_instant_effect(key: String, value, target: Player, other: Player) ->
 				_return_card_at(_played_discard_index, target)
 		"extra_turn":
 			target.bonus_turns += 1
+			target.bonus_turn_sources.append("Play 1 more card from %s" % _last_played_name)
 		"enemy_extra_turn":
 			other.bonus_turns += 1
+			other.bonus_turn_sources.append("Enemy gets an extra turn from %s" % _last_played_name)
 		"swap_pools":
 			var temp = target.pool
 			target.pool = other.pool
@@ -430,7 +472,7 @@ func _return_card_at(index: int, target: Player) -> bool:
 func _show_reclaim_choices() -> void:
 	state = BattleState.WAITING_FOR_RECLAIM
 	_clear_children(reclaim_list)
-	$UI/ReclaimPanel/VBox/Title.text = "%s — reclaim a card" % _player_name(_reclaim_targets[0])
+	reclaim_panel.get_node("VBox/Title").text = "%s — reclaim a card" % _player_name(_reclaim_targets[0])
 	var shown: Array = []
 	for item_id in played_cards_list:
 		if item_id in shown:
@@ -474,7 +516,7 @@ func _end_battle_by_hp() -> void:
 		winner = "Player 1"
 	elif player2.hp > player1.hp:
 		winner = "Player 2"
-	_end_battle(winner, "Both pools exhausted — higher HP wins")
+	_end_battle(winner, "Both menus are empty. Highest HP takes the table.")
 
 func _end_battle(winner: String, reason: String) -> void:
 	state = BattleState.BATTLE_OVER
@@ -489,8 +531,8 @@ func _update_hp_bars() -> void:
 	_animate_hp(hp_bar_p1, player1.hp)
 	hp_bar_p2.max_value = player2.max_hp
 	_animate_hp(hp_bar_p2, player2.hp)
-	$Players/Player1/HPText.text = "%s / %d of %d HP" % [_player_name(player1), player1.hp, player1.max_hp]
-	$Players/Player2/HPText.text = "%s / %d of %d HP" % [_player_name(player2), player2.hp, player2.max_hp]
+	_hp_labels[0].text = "%d / %d HP" % [player1.hp, player1.max_hp]
+	_hp_labels[1].text = "%d / %d HP" % [player2.hp, player2.max_hp]
 
 func _buff_text(player: Player) -> String:
 	var names: Array[String] = []
@@ -505,70 +547,98 @@ func _buff_text(player: Player) -> String:
 		names.append("Reverse next effect target")
 	if player.bonus_turns > 0:
 		names.append("Bonus turns: %d" % player.bonus_turns)
+		for source in player.bonus_turn_sources:
+			names.append(source)
+	if "skip_turn" in player.active_buffs and not player.skip_turn_source.is_empty():
+		names.append(player.skip_turn_source)
 	return " • ".join(names) if not names.is_empty() else "No active effects"
 
 func _update_ui() -> void:
 	var ready_for_card = state == BattleState.WAITING_FOR_CARD
+	if _turn_notice:
+		_turn_notice.visible = ready_for_card
 	turn_label.text = "%s's turn" % _player_name(get_current_player())
 	if state == BattleState.RESOLVING:
-		turn_label.text = "Resolving card…"
+		turn_label.text = "Serving it up..."
 	elif state == BattleState.WAITING_FOR_RECLAIM:
-		turn_label.text = "Choose a card to reclaim"
+		turn_label.text = "Pick a dish to bring back"
 	elif state == BattleState.BATTLE_OVER:
-		turn_label.text = "Match finished"
+		turn_label.text = "That's the match"
 	_set_cards_interactable(card_list_p1, ready_for_card and current_turn == 0)
 	_set_cards_interactable(card_list_p2, ready_for_card and current_turn == 1)
 	$Decks/CardDeck/Count.text = "%s / %d cards" % [_player_name(player1), player1.pool.size()]
 	$Decks/CardDeck2/Count.text = "%s / %d cards" % [_player_name(player2), player2.pool.size()]
-	$Players/Player1/Buffs.text = _player_name(player1) + " effects: " + _buff_text(player1)
-	$Players/Player2/Buffs.text = _player_name(player2) + " effects: " + _buff_text(player2)
+	_buff_labels[0].text = _buff_text(player1)
+	_buff_labels[1].text = _buff_text(player2)
 	$Decks/CardDeck/Count.modulate = GameStyle.GOLD if current_turn == 0 else GameStyle.MUTED
 	$Decks/CardDeck2/Count.modulate = GameStyle.GOLD if current_turn == 1 else GameStyle.MUTED
-	turn_label.modulate = GameStyle.GOLD
+	turn_label.modulate = Color.WHITE
 	if _play_button:
-		_play_button.visible = ready_for_card and not selected_item.is_empty()
+		_play_button.disabled = not ready_for_card or selected_item.is_empty()
 	if _pool_label:
-		_pool_label.text = "%s  /  UNIQUE EFFECTS  %02d / 30" % [GameManager.get_theme_info().get("name", "TASTE DUEL").to_upper(), available_effects.size()]
+		_pool_label.text = "%s  /  %02d SPECIALS LEFT" % [GameManager.get_theme_info().get("name", "TASTE DUEL").to_upper(), available_effects.size()]
+		_pool_label.visible = true
+	for button in _menu_buttons:
+		button.visible = ready_for_card
+	for button in _pool_buttons:
+		button.visible = true
+		button.disabled = not ready_for_card or button != _pool_buttons[current_turn]
+	if not _pool_buttons.is_empty():
+		for i in range(2):
+			var count = player1.pool.size() if i == 0 else player2.pool.size()
+			_pool_buttons[i].text = "%s  ·  %d cards" % ["Choose a card" if i == current_turn else "Waiting", count]
 	for i in range(_portraits.size()):
 		_portraits[i].active = ready_for_card and current_turn == i
 		_portraits[i].queue_redraw()
 
 func _animate_card_to_table(item_id: String) -> void:
 	_clear_children(played_cards)
+	_card_slot.get_node("EmptyTable").hide()
 	var card = PanelContainer.new()
 	card.theme = GameStyle.theme()
-	card.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.GOLD, 14, 8))
-	card.custom_minimum_size = Vector2(200, 150)
-	card.size = Vector2(200, 150)
+	card.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PAPER, GameStyle.GOLD, 5, 9))
+	card.custom_minimum_size = Vector2(210, 160)
+	card.size = Vector2(210, 160)
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var content = VBoxContainer.new()
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_theme_constant_override("separation", 5)
 	card.add_child(content)
+	var stamp = Label.new()
+	stamp.text = "FROM THE MENU"
+	stamp.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	stamp.add_theme_font_size_override("font_size", 10)
+	stamp.add_theme_color_override("font_color", GameStyle.PAPER_INK.darkened(0.12))
+	content.add_child(stamp)
 	var icon = TextureRect.new()
 	icon.material = GameStyle.art_material()
-	icon.custom_minimum_size = Vector2(180, 98)
+	icon.custom_minimum_size = Vector2(184, 58)
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon.texture = GameManager.get_texture(item_id)
 	if icon.texture == null:
+		icon.free()
 		var fallback = Label.new()
 		var catalog_item = GameManager.get_catalog_item(GameManager.active_theme_id, item_id)
 		fallback.text = catalog_item.icon if catalog_item != null else "✦"
 		fallback.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		fallback.custom_minimum_size = Vector2(180, 98)
-		fallback.add_theme_font_size_override("font_size", 60)
+		fallback.custom_minimum_size = Vector2(184, 58)
+		fallback.add_theme_font_size_override("font_size", 36)
+		fallback.add_theme_color_override("font_color", GameStyle.PAPER_INK.lightened(0.18))
 		content.add_child(fallback)
 	else:
 		content.add_child(icon)
 	var label = Label.new()
 	label.text = GameManager.get_item_name(item_id)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.custom_minimum_size = Vector2(180, 24)
+	label.custom_minimum_size = Vector2(180, 20)
 	label.clip_text = true
 	label.tooltip_text = label.text
+	label.add_theme_color_override("font_color", GameStyle.PAPER_INK)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(label)
 	played_cards.add_child(card)
-	card.position = Vector2(240 if current_turn == 0 else -240, 120 if current_turn == 0 else -120)
+	card.position = Vector2(-75 if current_turn == 0 else 75, 0)
 	card.pivot_offset = card.size / 2
 	if animation_duration > 0 and not GameManager.reduce_motion:
 		card.scale = Vector2(0.8, 0.8)
@@ -579,44 +649,36 @@ func _animate_card_to_table(item_id: String) -> void:
 
 func _style_battle() -> void:
 	GameStyle.apply(self)
-	$Background/ColorRect.color = GameStyle.INK
+	$Background/ColorRect.color = GameStyle.BACKGROUND
 	$Table.hide()
-	# Procedural table and deck wells keep the artwork visually consistent.
-	for rect in [Rect2(12, 18, 328, 688), Rect2(940, 18, 328, 688), Rect2(350, 250, 580, 278)]:
-		var panel = Panel.new()
-		panel.position = rect.position
-		panel.size = rect.size
-		panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		panel.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL.darkened(0.25), GameStyle.LINE, 18))
-		$Background.add_child(panel)
-	for i in range(2):
-		var original = $Players/Player1/Player1 if i == 0 else $Players/Player2/Player2
-		original.hide()
-		var portrait = AvatarPortrait.new()
-		portrait.position = original.position - Vector2(4, 16)
-		portrait.size = Vector2(104, 120)
-		portrait.avatar_index = GameManager.profiles[i].avatar
-		portrait.accent = GameManager.COLORS[GameManager.profiles[i].color]
-		original.get_parent().add_child(portrait)
-		_portraits.append(portrait)
-	for label in [$Players/Player1/Buffs, $Players/Player2/Buffs]:
+	$Players/Player1/Player1.hide()
+	$Players/Player2/Player2.hide()
+	$Background.add_child(preload("res://SceneBackdrop.gd").new())
+	preload("res://BattleLayout.gd").build(self)
+	for label in _buff_labels:
 		label.tooltip_text = "These effects belong to the named player. Damage modifiers apply only to that player's next damaging attack, then expire. Healing and neutral cards preserve them. Card hits are capped at %d damage." % CardBalance.MAX_HIT
-	effect_popup.add_theme_font_size_override("font_size", 14)
 	_build_battle_controls()
 	for panel in [reclaim_panel, $WinScreen/Dim/Panel]:
-		panel.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.GOLD, 16, 18))
-	var title = Label.new()
-	title.text = "TASTE / DUEL"
-	title.position = Vector2(366, 680)
-	title.modulate = GameStyle.MUTED
-	title.add_theme_font_size_override("font_size", 13)
-	$UI.add_child(title)
+		panel.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.GOLD, 6, 18))
+	var reclaim_layer = CanvasLayer.new()
+	reclaim_layer.layer = 4
+	add_child(reclaim_layer)
+	var dim = ColorRect.new()
+	dim.color = Color(GameStyle.NIGHT_SHADOW, 0.86)
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	reclaim_layer.add_child(dim)
+	reclaim_panel.reparent(reclaim_layer)
+	GameStyle.center_panel(reclaim_panel, Vector2(500, 460))
+	reclaim_panel.get_node("VBox/Title").autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	reclaim_panel.visibility_changed.connect(func(): dim.visible = reclaim_panel.visible)
+	dim.hide()
+	$WinScreen.layer = 5
 
 func _animate_hp(bar: ProgressBar, value: int) -> void:
 	if _hp_tweens.has(bar):
 		_hp_tweens[bar].kill()
 	var tint = GameStyle.CORAL if value <= 30 else GameStyle.MINT
-	bar.add_theme_stylebox_override("fill", GameStyle.box(tint, tint, 8, 0))
+	bar.add_theme_stylebox_override("fill", GameStyle.box(tint, tint.darkened(0.25), 6, 0))
 	if animation_duration <= 0 or GameManager.reduce_motion:
 		bar.value = value
 	else:
@@ -629,22 +691,23 @@ func _health_feedback(before: int, after: int, player: Player) -> void:
 	if not _portraits.is_empty():
 		_portraits[0 if player == player1 else 1].react("hit" if after < before else "heal")
 	var tint = GameStyle.CORAL if after < before else GameStyle.MINT
-	var origin = Vector2(650, 567 if player == player1 else 102)
+	var bar = hp_bar_p1 if player == player1 else hp_bar_p2
+	var origin = bar.global_position + Vector2(bar.size.x / 2, -8)
 	var offset = int(_float_counts.get(player, 0))
 	_float_counts[player] = offset + 1
 	var label = Label.new()
 	label.text = "%+d HP" % (after - before)
-	label.position = origin + Vector2(offset * 100 - 40, 28)
+	label.position = origin + Vector2(-40, -28 - offset * 24)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.add_theme_font_size_override("font_size", 20)
-	label.add_theme_color_override("font_color", tint)
-	label.add_theme_color_override("font_shadow_color", GameStyle.INK)
+	label.add_theme_color_override("font_color", GameStyle.readable(tint))
+	label.add_theme_color_override("font_shadow_color", GameStyle.PAPER)
 	label.add_theme_constant_override("shadow_offset_y", 2)
 	$UI.add_child(label)
 	var tween = label.create_tween()
 	if not GameManager.reduce_motion:
 		var trail = preload("res://CombatTrail.gd").new()
-		trail.position = Vector2(640, 330)
+		trail.position = _card_slot.global_position + _card_slot.size / 2
 		trail.destination = origin - trail.position
 		trail.tint = tint
 		$UI.add_child(trail)
@@ -659,26 +722,29 @@ func _health_feedback(before: int, after: int, player: Player) -> void:
 	tween.tween_callback(label.queue_free)
 
 func _build_battle_controls() -> void:
-	_pool_label = Label.new()
-	_pool_label.position = Vector2(366, 218)
-	_pool_label.add_theme_font_size_override("font_size", 13)
-	_pool_label.modulate = GameStyle.GOLD
-	$UI.add_child(_pool_label)
+	var back_button = Button.new()
+	back_button.theme = GameStyle.theme()
+	back_button.custom_minimum_size = Vector2(88, 44)
+	back_button.text = "Menu"
+	back_button.pressed.connect(func():
+		if _leave_panel != null:
+			_leave_panel.show()
+	)
+	_toolbar.add_child(back_button)
+	_toolbar.move_child(back_button, 0)
 	_play_button = Button.new()
 	_play_button.theme = GameStyle.theme()
-	_play_button.position = Vector2(530, 478)
-	_play_button.size = Vector2(220, 40)
-	_play_button.text = "PLAY THIS CARD  >"
-	_play_button.add_theme_color_override("font_color", GameStyle.MINT)
+	_play_button.custom_minimum_size = Vector2(220, 48)
+	_play_button.text = "Serve this card  →"
+	GameStyle.primary(_play_button, GameStyle.SKY)
 	_play_button.pressed.connect(func():
 		if not selected_item.is_empty():
 			play_item(selected_item)
 	)
-	$UI.add_child(_play_button)
-	_play_button.hide()
+	_table_stack.add_child(_play_button)
 	_history_panel = _make_overlay("EFFECT JOURNAL")
 	_history_text = RichTextLabel.new()
-	_history_text.custom_minimum_size = Vector2(590, 320)
+	_history_text.custom_minimum_size = Vector2(0, 280)
 	_history_text.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_history_text.bbcode_enabled = false
 	_history_panel.get_child(0).add_child(_history_text)
@@ -712,17 +778,86 @@ func _build_battle_controls() -> void:
 		GameManager.save_profiles()
 	)
 	settings.add_child(resume)
-	for entry in [["Effect journal", Vector2(680, 208)], ["Settings", Vector2(817, 208)]]:
+	for entry in [["Effect journal"], ["Settings"]]:
 		var button = Button.new()
 		button.theme = GameStyle.theme()
-		button.position = entry[1]
 		button.text = entry[0]
 		button.add_theme_font_size_override("font_size", 13)
 		if entry[0] == "Effect journal":
 			button.pressed.connect(_show_history)
 		else:
 			button.pressed.connect(_open_settings)
-		$UI.add_child(button)
+		_toolbar.add_child(button)
+		_menu_buttons.append(button)
+	_leave_panel = _make_leave_dialog()
+	_make_pool_dialog()
+
+func _build_pool_controls() -> void:
+	$Decks/CardDeck/Count.hide()
+	$Decks/CardDeck/Scroll.hide()
+	$Decks/CardDeck2/Count.hide()
+	$Decks/CardDeck2/Scroll.hide()
+	for i in range(2):
+		var button = Button.new()
+		button.theme = GameStyle.theme()
+		button.custom_minimum_size.y = 56
+		button.add_theme_font_size_override("font_size", 15)
+		var owner: Player = player1 if i == 0 else player2
+		GameStyle.primary(button, GameStyle.CORAL if i == 0 else GameStyle.SKY)
+		button.pressed.connect(_open_pool.bind(owner))
+		_player_stacks[i].add_child(button)
+		_pool_buttons.append(button)
+
+func _make_pool_dialog() -> void:
+	_pool_layer = CanvasLayer.new()
+	_pool_layer.layer = 3
+	add_child(_pool_layer)
+	var dim = ColorRect.new()
+	dim.color = Color(GameStyle.NIGHT_SHADOW, 0.86)
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	dim.mouse_filter = Control.MOUSE_FILTER_STOP
+	_pool_layer.add_child(dim)
+	_pool_panel = PanelContainer.new()
+	_pool_panel.theme = GameStyle.theme()
+	_pool_panel.set_anchors_preset(Control.PRESET_CENTER)
+	_pool_panel.position = Vector2(-430, -295)
+	_pool_panel.size = Vector2(860, 590)
+	_pool_panel.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.GOLD, 7, 20))
+	_pool_layer.add_child(_pool_panel)
+	GameStyle.center_panel(_pool_panel, Vector2(760, 590))
+	var content = VBoxContainer.new()
+	content.add_theme_constant_override("separation", 12)
+	_pool_panel.add_child(content)
+	_pool_title = Label.new()
+	_pool_title.add_theme_font_size_override("font_size", 24)
+	_pool_title.add_theme_color_override("font_color", GameStyle.INK)
+	_pool_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(_pool_title)
+	var note = Label.new()
+	note.text = "Choose a card to preview it, then play it from the table."
+	note.add_theme_color_override("font_color", GameStyle.MUTED)
+	content.add_child(note)
+	var scroll = ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	content.add_child(scroll)
+	_pool_list = VBoxContainer.new()
+	_pool_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(_pool_list)
+	var close = Button.new()
+	close.text = "BACK TO THE TABLE"
+	close.custom_minimum_size.y = 44
+	close.pressed.connect(func(): _pool_layer.visible = false)
+	content.add_child(close)
+	_pool_layer.visible = false
+
+func _open_pool(player: Player) -> void:
+	if state != BattleState.WAITING_FOR_CARD or player != get_current_player():
+		return
+	_pool_title.text = "%s'S POOL  /  %d CARDS" % [_player_name(player).to_upper(), player.pool.size()]
+	_clear_children(_pool_list)
+	_populate_card_list(_pool_list, player, true)
+	_pool_layer.visible = true
 
 func _make_overlay(title: String) -> PanelContainer:
 	# Higher layer blocks card clicks while a journal/settings panel is open.
@@ -730,15 +865,16 @@ func _make_overlay(title: String) -> PanelContainer:
 	layer.layer = 2
 	add_child(layer)
 	var dim = ColorRect.new()
-	dim.color = Color(0.02, 0.04, 0.06, 0.85)
+	dim.color = Color(GameStyle.NIGHT_SHADOW, 0.86)
 	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	layer.add_child(dim)
 	var panel = PanelContainer.new()
 	panel.theme = GameStyle.theme()
 	panel.position = Vector2(320, 130)
 	panel.size = Vector2(640, 470)
-	panel.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.INK, GameStyle.GOLD, 18, 24))
+	panel.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.LINE, 6, 24))
 	layer.add_child(panel)
+	GameStyle.center_panel(panel, Vector2(640, 500))
 	panel.visibility_changed.connect(func(): dim.visible = panel.visible)
 	var stack = VBoxContainer.new()
 	panel.add_child(stack)
@@ -746,16 +882,21 @@ func _make_overlay(title: String) -> PanelContainer:
 	var label = Label.new()
 	label.text = title
 	label.add_theme_font_size_override("font_size", 24)
-	label.modulate = GameStyle.GOLD
+	label.modulate = Color.WHITE
 	stack.add_child(label)
 	panel.hide()
 	return panel
 
 func _show_history() -> void:
 	var entries: Array[String] = ["%d effects remaining. Spent effects never return this match.\n" % available_effects.size()]
+	if not turn_history.is_empty():
+		entries.append("TURN HANDOFFS (newest first)\n")
+		for i in range(turn_history.size() - 1, -1, -1):
+			entries.append("%d. %s\n" % [i + 1, turn_history[i]])
+		entries.append("DRAWN EFFECTS\n")
 	for entry in effect_history:
 		entries.append("#%02d  %s\n%s  >  %s\n" % [entry.id, entry.effect, entry.card, entry.recipient])
-	if effect_history.is_empty():
+	if effect_history.is_empty() and turn_history.is_empty():
 		entries.append("Play your first card to start the journal.")
 	_history_text.text = "\n".join(entries)
 	_history_panel.show()
@@ -765,13 +906,71 @@ func _open_settings() -> void:
 	_settings_panel.show()
 	_settings_panel.get_child(0).get_children().back().grab_focus()
 
+func _make_leave_dialog() -> PanelContainer:
+	var layer = CanvasLayer.new()
+	layer.layer = 2
+	add_child(layer)
+	var dim = ColorRect.new()
+	dim.color = Color(GameStyle.NIGHT_SHADOW, 0.86)
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(dim)
+	var panel = PanelContainer.new()
+	panel.theme = GameStyle.theme()
+	panel.set_anchors_preset(Control.PRESET_CENTER)
+	panel.position = Vector2(-290, -165)
+	panel.size = Vector2(580, 330)
+	panel.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.GOLD, 7, 26))
+	layer.add_child(panel)
+	GameStyle.center_panel(panel, Vector2(580, 330))
+	panel.visibility_changed.connect(func(): dim.visible = panel.visible)
+	var content = VBoxContainer.new()
+	content.alignment = BoxContainer.ALIGNMENT_CENTER
+	content.add_theme_constant_override("separation", 16)
+	panel.add_child(content)
+	var title = Label.new()
+	title.text = "LEAVE THIS ROUND?"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 25)
+	content.add_child(title)
+	var note = Label.new()
+	note.text = "Your duel progress will be lost. Resume the match\nor quit back to the main menu."
+	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	note.add_theme_color_override("font_color", GameStyle.MUTED)
+	content.add_child(note)
+	var choices = HBoxContainer.new()
+	choices.alignment = BoxContainer.ALIGNMENT_CENTER
+	choices.add_theme_constant_override("separation", 12)
+	content.add_child(choices)
+	var resume = Button.new()
+	resume.text = "RESUME DUEL"
+	resume.custom_minimum_size = Vector2(190, 48)
+	resume.pressed.connect(func(): panel.hide())
+	choices.add_child(resume)
+	var quit = Button.new()
+	quit.text = "QUIT TO MENU"
+	quit.custom_minimum_size = Vector2(190, 48)
+	quit.add_theme_color_override("font_color", GameStyle.INK)
+	quit.add_theme_stylebox_override("normal", GameStyle.button_box(GameStyle.GOLD, GameStyle.GOLD, 5, 8))
+	GameStyle.primary(quit)
+	quit.pressed.connect(func():
+		GameManager.reset()
+		get_tree().change_scene_to_file("res://Main.tscn")
+	)
+	choices.add_child(quit)
+	panel.hide()
+	return panel
+
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and state != BattleState.BATTLE_OVER:
-		if _history_panel.visible:
+		if _pool_layer.visible:
+			_pool_layer.visible = false
+		elif _leave_panel.visible:
+			_leave_panel.hide()
+		elif _history_panel.visible:
 			_history_panel.hide()
 		elif _settings_panel.visible:
 			_settings_panel.hide()
 			GameManager.save_profiles()
 		else:
-			_open_settings()
+			_leave_panel.show()
 		get_viewport().set_input_as_handled()

@@ -2,8 +2,9 @@ class_name CardBalance
 extends RefCounted
 
 # One source of truth for setup previews, combat, and the balance report.
-const DAMAGE = [30, 27, 24, 21, 18, 15, 12]
-const HEAL = [10, 8, 7, 6, 5, 4, 2]
+# Keep low-ranked preferences relevant while leaving room for liked dishes to heal.
+const DAMAGE = [30, 28, 26, 24, 22, 20, 18]
+const HEAL = [16, 14, 12, 10, 8, 6, 4]
 const EFFECTS = [2, 2, 1, 1, 0, 0, 0]
 const MAX_HIT = 60
 

@@ -1,1 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="160" height="180" viewBox="0 0 160 180"><ellipse cx="80" cy="168" rx="53" ry="8" fill="#101b24" opacity=".4"/><path d="M27 158 Q24 111 53 105 L107 105 Q136 111 133 158 Q80 179 27 158Z" fill="#ff00ff" stroke="#172b38" stroke-width="5"/><path d="M55 110 L80 133 L105 110 L108 164 L52 164Z" fill="#f6ead4"/><path d="M62 111 L64 143 M98 111 L96 143" stroke="#d6bd94" stroke-width="5"/><circle cx="80" cy="148" r="8" fill="#ff00ff"/><path d="M40 71 Q36 36 80 35 Q124 36 120 76 L113 102 Q82 129 49 103Z" fill="#eab68e" stroke="#172b38" stroke-width="5"/><path d="M41 77 L41 55 Q48 31 80 37 Q116 31 120 62 L116 78 L105 58 Q67 70 49 60Z" fill="#63423a"/><path d="M43 45 C19 43 26 15 46 19 C48 -1 74 -3 81 12 C100 -6 121 5 119 23 C143 21 145 48 120 49 L115 63 L46 61Z" fill="#fff5df" stroke="#172b38" stroke-width="4"/><path d="M48 48 L116 48" stroke="#d6bd94" stroke-width="5"/><ellipse cx="59" cy="81" rx="5" ry="7" fill="#172b38"/><ellipse cx="101" cy="81" rx="5" ry="7" fill="#172b38"/><circle cx="60" cy="79" r="1.5" fill="#fff"/><circle cx="102" cy="79" r="1.5" fill="#fff"/><path d="M71 103 Q80 112 89 103" fill="none" stroke="#714650" stroke-width="3" stroke-linecap="round"/></svg>
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="160" height="180" viewBox="0 0 160 180">
+<!-- Pepper: a little dumpling-shaped cook. Magenta is the apron tint mask. -->
+<g stroke="#526b80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<ellipse cx="80" cy="169" rx="43" ry="6" fill="#526b80" opacity=".15" stroke="none"/>
+<ellipse cx="61" cy="163" rx="13" ry="7" fill="#819cb3"/><ellipse cx="99" cy="163" rx="13" ry="7" fill="#819cb3"/>
+<path d="M44 127 Q31 127 29 140 Q30 150 43 146 M116 127 Q129 127 131 139 Q130 150 117 146" fill="#e6bcaa"/>
+<path d="M46 120 Q50 109 80 109 Q110 109 114 125 L119 147 Q121 165 80 166 Q39 166 41 148Z" fill="#ff00ff"/>
+<path d="M61 117 Q80 130 99 117 L103 155 Q79 164 57 155Z" fill="#ebe9dd"/>
+<path d="M64 116 L65 130 M96 116 L95 130" fill="none"/>
+<path d="M69 143 Q80 149 91 143 L90 153 Q80 157 70 153Z" fill="#ff00ff" stroke-width="2"/>
+<path d="M37 78 Q36 45 80 43 Q124 44 123 79 L121 92 Q115 121 80 122 Q45 121 39 96Z" fill="#eac7b3"/>
+<path d="M40 78 Q30 55 48 45 Q55 33 78 39 Q109 33 122 58 L120 80 Q104 76 99 60 Q89 76 73 72 Q60 69 57 61 Q54 76 40 78Z" fill="#8a756e"/>
+<path d="M46 47 Q23 42 29 26 Q34 13 50 18 Q57 0 77 11 Q93 0 108 16 Q128 13 132 29 Q136 46 113 49 L111 60 Q82 67 47 58Z" fill="#ebe9df"/>
+<path d="M50 48 Q79 54 111 49" fill="none" stroke="#a4b5be" stroke-width="2"/>
+<path d="M65 24 Q59 32 63 39 M91 21 Q100 29 96 39" fill="none" stroke="#c8d3d8" stroke-width="2"/>
+<ellipse cx="52" cy="96" rx="9" ry="5" fill="#dba3a5" stroke="none"/><ellipse cx="109" cy="96" rx="9" ry="5" fill="#dba3a5" stroke="none"/>
+<ellipse cx="62" cy="86" rx="4" ry="6" fill="#435c72" stroke="none"/><ellipse cx="99" cy="86" rx="4" ry="6" fill="#435c72" stroke="none"/>
+<path d="M73 100 Q80 108 88 100" fill="none"/><path d="M80 91 l-2 4 h4" fill="none" stroke="#bb9083" stroke-width="2"/>
+</g></svg>

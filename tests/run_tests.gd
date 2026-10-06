@@ -39,6 +39,7 @@ func run() -> void:
 	await test_combat()
 	await test_balance_limits()
 	await test_effects()
+	await test_return_card_turns()
 	await test_effect_ownership()
 	await test_shared_effect_pool()
 	await test_customization()
@@ -52,8 +53,8 @@ func test_combat() -> void:
 	var b = await fresh_battle()
 	b.player2.preferences[CARD] = {"category": "disliked", "rank": 4}
 	await b.play_item(CARD)
-	check(b.player1.hp == 100 and b.player2.hp == 79, "rank damage")
-	check(b.hp_bar_p1.value == 100 and b.hp_bar_p2.value == 79, "correct HP bars")
+	check(b.player1.hp == 100 and b.player2.hp == 76, "rank damage")
+	check(b.hp_bar_p1.value == 100 and b.hp_bar_p2.value == 76, "correct HP bars")
 	check(b.current_turn == 1 and b.player1.pool.size() == 20, "card spent and turn changes")
 	await process_frame
 	await process_frame
@@ -105,11 +106,11 @@ func test_combat() -> void:
 	b.player2.preferences[SECOND] = {"category": "liked", "rank": 4}
 	b.player2.hp = 50
 	await b.play_item(SECOND)
-	check(b.player2.hp == 56 and "dmg_mult" in b.player1.active_buffs, "damage buff does not modify healing")
+	check(b.player2.hp == 60 and "dmg_mult" in b.player1.active_buffs, "damage buff does not modify healing")
 	await b.play_item(SECOND)
 	b.player2.preferences["ramen"] = {"category": "disliked", "rank": 7}
 	await b.play_item("ramen")
-	check(b.player2.hp == 32 and "dmg_mult" not in b.player1.active_buffs, "buff applied once on damage")
+	check(b.player2.hp == 24 and "dmg_mult" not in b.player1.active_buffs, "buff applied once on damage")
 	await dispose(b)
 
 	b = await fresh_battle()
@@ -140,6 +141,55 @@ func test_combat() -> void:
 	await create_timer(0.1).timeout
 	check(b.state == b.BattleState.WAITING_FOR_CARD, "animation unlocks turn")
 	await dispose(b)
+
+func test_return_card_turns() -> void:
+	# The reported two-effect draw, with and without earlier turn-changing effects.
+	for turn in [0, 1]:
+		for scenario in ["normal", "bonus", "skip", "empty", "last_card"]:
+			var b = await fresh_battle()
+			b.current_turn = turn
+			var attacker = b.get_current_player()
+			var opponent = b.get_opponent()
+			b._last_played_name = "Earlier card"
+			if scenario == "bonus":
+				b._apply_effect(b.effects_pool[13], attacker, opponent)
+			elif scenario == "skip":
+				b._apply_effect(b.effects_pool[14], attacker, opponent)
+			elif scenario == "empty":
+				opponent.pool = [manager.get_item(SECOND)]
+			elif scenario == "last_card":
+				attacker.pool = [manager.get_item(CARD)]
+			var attacker_count: int = attacker.pool.size()
+			var opponent_count: int = opponent.pool.size()
+			opponent.preferences[CARD] = {"category": "disliked", "rank": 1}
+			b.available_effects = {12: b.effects_pool[12], 26: b.effects_pool[26]}
+			await b.play_item(CARD)
+			var context = "P%d return + destroy (%s)" % [turn + 1, scenario]
+			check(opponent.hp == 70 and attacker.hp == 100, context + " deals 30 damage")
+			check(attacker.pool.size() == attacker_count and attacker.has_item(CARD), context + " restores played card")
+			check(opponent.pool.size() == opponent_count - 1, context + " destroys opponent card")
+			check(b.effect_history.size() == 2 and b.used_effect_ids.has(12) and b.used_effect_ids.has(26), context + " draws exactly the reported effects")
+			var repeat_turn = scenario in ["bonus", "skip", "empty"]
+			check(b.current_turn == (turn if repeat_turn else 1 - turn), context + " selects correct next player")
+			check(attacker.bonus_turns == 0 and opponent.bonus_turns == 0, context + " return grants no bonus")
+			var notice: String = b._turn_notice.text
+			if scenario == "bonus":
+				check("bonus turn" in notice and "Play 1 more card from Earlier card" in notice, context + " explains earlier bonus source")
+			elif scenario == "skip":
+				check("skips a turn" in notice and "Enemy skips next turn from Earlier card" in notice, context + " explains earlier skip source")
+			elif scenario == "empty":
+				check("has no cards" in notice, context + " explains exhausted opponent")
+			else:
+				check("plays next" in notice and b._turn_reasons.is_empty(), context + " normal handoff")
+			b.select_item(b.get_current_player().pool[0].id)
+			check(b._turn_notice.visible and b._turn_notice.text == notice, context + " explanation survives card selection")
+			b._show_history()
+			check(notice in b._history_text.text, context + " journal preserves handoff")
+			b._history_panel.hide()
+			if scenario == "bonus" or scenario == "skip":
+				await b.play_item(SECOND)
+				check(b.current_turn == 1 - turn and b._turn_reasons.is_empty(), context + " extra play ends normally and clears explanation")
+			await dispose(b)
 
 func test_effects() -> void:
 	# Every effect receives its own clean fixture and a concrete expected result.
@@ -398,17 +448,16 @@ func test_scene_flow() -> void:
 	await process_frame
 	await process_frame
 	var main = current_scene
-	check(main.current_form == null and main.form_container.get_child(0).name_fields.size() == 2, "match starts in customization lobby")
+	check(main.current_form == null and main.current_screen == "menu", "match starts at main menu")
+	main._show_customization()
+	check(main.form_container.get_child(0).name_fields.size() == 2, "customization shows both players")
 	main._start_match()
 	main.current_form._on_randomize()
 	main.current_form._on_confirm()
-	var tap = InputEventMouseButton.new()
-	tap.button_index = MOUSE_BUTTON_LEFT
-	tap.pressed = true
-	main._input(tap)
+	main._pass_device_to_player_two()
 	check(main.current_form == null, "handoff ignores confirmation click")
 	await create_timer(0.6).timeout
-	main._input(tap)
+	main._pass_device_to_player_two()
 	check(main.form_container.get_child_count() == 1 and main.current_form.current_player == 2, "handoff removes prompt")
 	main.current_form._on_randomize()
 	main.current_form._on_confirm()
@@ -419,7 +468,7 @@ func test_scene_flow() -> void:
 	current_scene.win_screen._on_restart_pressed()
 	await process_frame
 	await process_frame
-	check(current_scene.current_form == null and manager.prefs_p1.is_empty() and manager.prefs_p2.is_empty(), "rematch returns to lobby and resets preferences")
+	check(current_scene.current_screen == "menu" and current_scene.current_form == null and manager.prefs_p1.is_empty() and manager.prefs_p2.is_empty(), "rematch returns to menu and resets preferences")
 
 func test_shared_effect_pool() -> void:
 	var b = await fresh_battle()
@@ -472,7 +521,7 @@ func test_customization() -> void:
 	check(b.selected_item == CARD, "journal blocks underlying card selection")
 	b._history_panel.hide()
 	b._play_button.pressed.emit()
-	check(b.player1.pool.size() == 20 and not b._play_button.visible, "play confirmation spends exactly one card")
+	check(b.player1.pool.size() == 20 and b._play_button.disabled, "play confirmation spends exactly one card and disables action")
 	b._end_battle("Player 1", "Test")
 	check(b.win_screen.title_label.text == "Nova wins!", "custom name shown in results")
 	await dispose(b)

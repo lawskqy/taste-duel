@@ -8,6 +8,9 @@ const PROFILES = {
 	"pressure_8": {"damage": [32,29,26,23,20,17,14,11], "heal": [10,9,8,7,6,5,4,3], "cap": 60, "multiplier": 2.0, "small_heal": 8, "big_heal": 16, "max_hp": 6, "missing_heal": 0.15},
 	"moderate_7": {"damage": [32,29,26,23,20,17,14], "heal": [10,8,7,6,5,4,2], "cap": 60, "multiplier": 2.0, "small_heal": 8, "big_heal": 16, "max_hp": 6, "missing_heal": 0.15},
 	"gentle_7": {"damage": [30,27,24,21,18,15,12], "heal": [10,8,7,6,5,4,2], "cap": 60, "multiplier": 2.0, "small_heal": 8, "big_heal": 16, "max_hp": 6, "missing_heal": 0.15},
+	"healing_plus": {"damage": [30,28,26,24,22,20,18], "heal": [14,12,10,8,6,4,2], "cap": 60, "multiplier": 2.0, "small_heal": 8, "big_heal": 16, "max_hp": 6, "missing_heal": 0.15},
+	"healing_push": {"damage": [32,29,26,23,20,17,14], "heal": [14,12,10,8,6,4,2], "cap": 60, "multiplier": 2.0, "small_heal": 8, "big_heal": 16, "max_hp": 6, "missing_heal": 0.15},
+	"balanced_7": {"damage": [30,28,26,24,22,20,18], "heal": [16,14,12,10,8,6,4], "cap": 60, "multiplier": 2.0, "small_heal": 8, "big_heal": 16, "max_hp": 6, "missing_heal": 0.15},
 }
 
 func _initialize() -> void:

@@ -26,6 +26,9 @@ window/size/viewport_height=720
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+window/size/min_width=960
+window/size/min_height=540
 
 [physics]
 
@@ -35,4 +38,4 @@ window/stretch/mode="canvas_items"
 
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.063, 0.106, 0.141, 1)
+environment/defaults/default_clear_color=Color(0.569, 0.667, 0.741, 1)

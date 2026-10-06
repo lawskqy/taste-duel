@@ -1,13 +1,13 @@
 extends Control
 
-@onready var player_label = $Layout/Header/PlayerLabel
-@onready var timer_label = $Layout/Header/TimerLabel
-@onready var randomize_btn = $Layout/Header/Buttons/RandomizeButton
-@onready var confirm_btn = $Layout/Header/Buttons/ConfirmButton
-@onready var pool_grid = $Layout/Pool/Scroll/PoolGrid
-@onready var dislike_list = $Layout/Columns/DislikeColumn/Scroll/DislikeList
-@onready var neutral_list = $Layout/Columns/NeutralColumn/Scroll/NeutralList
-@onready var like_list = $Layout/Columns/LikeColumn/Scroll/LikeList
+@onready var player_label = $Layout/Header/Bar/PlayerLabel
+@onready var timer_label = $Layout/Header/Bar/TimerLabel
+@onready var randomize_btn = $Layout/Header/Bar/Buttons/RandomizeButton
+@onready var confirm_btn = $Layout/Header/Bar/Buttons/ConfirmButton
+@onready var pool_grid = $Layout/Pool/Board/Scroll/PoolGrid
+@onready var dislike_list = $Layout/Columns/DislikeColumn/Board/Scroll/DislikeList
+@onready var neutral_list = $Layout/Columns/NeutralColumn/Board/Scroll/NeutralList
+@onready var like_list = $Layout/Columns/LikeColumn/Board/Scroll/LikeList
 
 const DISH_CARD = preload("res://DishCard.tscn")
 const TIME_LIMIT = 120  
@@ -25,18 +25,39 @@ var all_lists: Array = []
 var submitted: bool = false
 
 signal form_submitted(player_idx: int, preferences: Dictionary)
+signal back_requested
 
 func _ready() -> void:
 	GameStyle.apply(self)
-	$Background.color = GameStyle.INK
-	GameStyle.motion_button($Layout/Header/Buttons)
-	confirm_btn.add_theme_color_override("font_color", GameStyle.MINT)
-	for entry in [[dislike_list, GameStyle.CORAL], [neutral_list, GameStyle.GOLD], [like_list, GameStyle.MINT]]:
-		entry[0].get_parent().add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL.darkened(0.3), entry[1].darkened(0.5), 12, 8))
-		entry[0].get_parent().get_parent().get_child(0).modulate = entry[1]
+	$Background.color = GameStyle.BACKGROUND
+	GameStyle.motion_button($Layout/Header/Bar/Buttons)
+	confirm_btn.add_theme_color_override("font_color", GameStyle.INK)
+	confirm_btn.add_theme_stylebox_override("normal", GameStyle.button_box(GameStyle.GOLD, GameStyle.GOLD, 5, 9))
+	confirm_btn.add_theme_stylebox_override("disabled", GameStyle.box(GameStyle.PANEL, GameStyle.LINE, 5, 9))
+	GameStyle.primary(confirm_btn)
+	$Layout/Header.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.LINE, 6, 12))
+	player_label.add_theme_color_override("font_color", GameStyle.TEXT)
+	player_label.add_theme_font_size_override("font_size", 22)
+	player_label.clip_text = true
+	player_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	timer_label.add_theme_color_override("font_color", GameStyle.INK)
+	timer_label.add_theme_font_size_override("font_size", 20)
+	$Layout/Instructions.add_theme_color_override("font_color", GameStyle.MUTED)
+	$Layout/Instructions.add_theme_font_size_override("font_size", 14)
+	$Layout/Pool.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.LINE, 6, 12))
+	$Layout/Pool/Board/PoolHeader.add_theme_color_override("font_color", GameStyle.TEXT)
+	$Layout/Pool/Board/PoolHeader.add_theme_font_size_override("font_size", 16)
+	$Layout/Columns/DislikeColumn.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.CORAL.darkened(0.35), 6, 12))
+	$Layout/Columns/NeutralColumn.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.GOLD.darkened(0.35), 6, 12))
+	$Layout/Columns/LikeColumn.add_theme_stylebox_override("panel", GameStyle.box(GameStyle.PANEL, GameStyle.MINT.darkened(0.35), 6, 12))
+	for entry in [[GameStyle.CORAL, $Layout/Columns/DislikeColumn/Board/DislikeHeader], [GameStyle.GOLD, $Layout/Columns/NeutralColumn/Board/NeutralHeader], [GameStyle.MINT, $Layout/Columns/LikeColumn/Board/LikeHeader]]:
+		entry[1].add_theme_color_override("font_color", GameStyle.readable(entry[0]))
+		entry[1].add_theme_font_size_override("font_size", 16)
+		entry[1].custom_minimum_size.y = 30
 	all_lists = [pool_grid, dislike_list, neutral_list, like_list]
 	randomize_btn.pressed.connect(_on_randomize)
 	confirm_btn.pressed.connect(_on_confirm)
+	$Layout/Header/Bar/Buttons/BackButton.pressed.connect(func(): back_requested.emit())
 	confirm_btn.disabled = true
 
 func setup(player_idx: int, items: Array) -> void:
@@ -45,8 +66,8 @@ func setup(player_idx: int, items: Array) -> void:
 	randomize_btn.disabled = false
 	time_remaining = TIME_LIMIT
 	current_player = player_idx
-	var theme_info: Dictionary = GameManager.get_theme_info()
-	player_label.text = "%s  /  %s" % [theme_info.get("name", "Taste Duel").to_upper(), GameManager.player_name(player_idx - 1)]
+	player_label.text = "P%d  /  %s's menu" % [player_idx, GameManager.player_name(player_idx - 1)]
+	player_label.tooltip_text = player_label.text
 	dishes = items
 	_populate_pool()
 	timer_running = true
@@ -231,13 +252,13 @@ func _check_confirm_valid() -> void:
 	var neutral_count = neutral_list.get_child_count()
 	var like_count = like_list.get_child_count()
 	confirm_btn.disabled = submitted or not (dislike_count == GROUP_SIZE and neutral_count == GROUP_SIZE and like_count == GROUP_SIZE and pool_grid.get_child_count() == 0)
-	$Layout/Columns/DislikeColumn/DislikeHeader.text = "Dislike (%d/%d) — strongest first" % [dislike_count, GROUP_SIZE]
-	$Layout/Columns/NeutralColumn/NeutralHeader.text = "Neutral (%d/%d)" % [neutral_count, GROUP_SIZE]
-	$Layout/Columns/LikeColumn/LikeHeader.text = "Like (%d/%d) — strongest first" % [like_count, GROUP_SIZE]
-	$Layout/Pool/PoolHeader.text = "Unsorted cards: %d — scroll to see more" % pool_grid.get_child_count()
-	$Layout/Pool/Scroll.custom_minimum_size.y = 64 if pool_grid.get_child_count() == 0 else 210
+	$Layout/Columns/DislikeColumn/Board/DislikeHeader.text = "NOT FOR ME     %d / %d" % [dislike_count, GROUP_SIZE]
+	$Layout/Columns/NeutralColumn/Board/NeutralHeader.text = "IT'S FINE     %d / %d" % [neutral_count, GROUP_SIZE]
+	$Layout/Columns/LikeColumn/Board/LikeHeader.text = "GIVE ME MORE     %d / %d" % [like_count, GROUP_SIZE]
+	$Layout/Pool/Board/PoolHeader.text = "YOUR MENU   /   %d dishes left to sort" % pool_grid.get_child_count()
+	$Layout/Pool/Board/Scroll.custom_minimum_size.y = 154 if pool_grid.get_child_count() > 0 else 32
 	if pool_grid.get_child_count() == 0:
-		$Layout/Pool/PoolHeader.text = "All cards ranked — drag here to unsort a card"
+		$Layout/Pool/Board/PoolHeader.text = "MENU SORTED   /   Drag a dish back here to change your mind"
 
 func _on_confirm() -> void:
 	_check_confirm_valid()

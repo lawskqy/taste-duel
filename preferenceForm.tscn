@@ -30,48 +30,59 @@ offset_right = -20.0
 offset_bottom = -16.0
 theme_override_constants/separation = 10
 
-[node name="Header" type="HBoxContainer" parent="Layout"]
+[node name="Header" type="PanelContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="Bar" type="HBoxContainer" parent="Layout/Header"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="PlayerLabel" type="Label" parent="Layout/Header"]
+[node name="PlayerLabel" type="Label" parent="Layout/Header/Bar"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 
-[node name="TimerLabel" type="Label" parent="Layout/Header"]
+[node name="TimerLabel" type="Label" parent="Layout/Header/Bar"]
 layout_mode = 2
 text = "2:00"
 
-[node name="Buttons" type="HBoxContainer" parent="Layout/Header"]
+[node name="Buttons" type="HBoxContainer" parent="Layout/Header/Bar"]
 layout_mode = 2
 
-[node name="RandomizeButton" type="Button" parent="Layout/Header/Buttons"]
+[node name="BackButton" type="Button" parent="Layout/Header/Bar/Buttons"]
 layout_mode = 2
-text = "Randomize"
+text = "Back"
 
-[node name="ConfirmButton" type="Button" parent="Layout/Header/Buttons"]
+[node name="RandomizeButton" type="Button" parent="Layout/Header/Bar/Buttons"]
 layout_mode = 2
-text = "Confirm"
+text = "Shuffle all"
+
+[node name="ConfirmButton" type="Button" parent="Layout/Header/Bar/Buttons"]
+layout_mode = 2
+text = "Lock in menu"
 
 [node name="Instructions" type="Label" parent="Layout"]
 layout_mode = 2
-text = "Rank 7 cards per group: these powers apply when your opponent plays them against you. Drag to reorder; drop on a full group to swap."
+text = "Sort 7 dishes into each column. Put your strongest opinions at the top; your rival will play from this menu."
 autowrap_mode = 3
 
-[node name="Pool" type="VBoxContainer" parent="Layout"]
+[node name="Pool" type="PanelContainer" parent="Layout"]
 layout_mode = 2
 
-[node name="PoolHeader" type="Label" parent="Layout/Pool"]
+[node name="Board" type="VBoxContainer" parent="Layout/Pool"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="PoolHeader" type="Label" parent="Layout/Pool/Board"]
 layout_mode = 2
 text = "Unsorted cards — scroll to see more"
 
-[node name="Scroll" type="ScrollContainer" parent="Layout/Pool"]
+[node name="Scroll" type="ScrollContainer" parent="Layout/Pool/Board"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 210)
 horizontal_scroll_mode = 0
 
-[node name="PoolGrid" type="GridContainer" parent="Layout/Pool/Scroll"]
+[node name="PoolGrid" type="GridContainer" parent="Layout/Pool/Board/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -84,60 +95,72 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="DislikeColumn" type="VBoxContainer" parent="Layout/Columns"]
+[node name="DislikeColumn" type="PanelContainer" parent="Layout/Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="DislikeHeader" type="Label" parent="Layout/Columns/DislikeColumn"]
+[node name="Board" type="VBoxContainer" parent="Layout/Columns/DislikeColumn"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="DislikeHeader" type="Label" parent="Layout/Columns/DislikeColumn/Board"]
 layout_mode = 2
 text = "Dislike (0/7)"
 
-[node name="Scroll" type="ScrollContainer" parent="Layout/Columns/DislikeColumn"]
+[node name="Scroll" type="ScrollContainer" parent="Layout/Columns/DislikeColumn/Board"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="DislikeList" type="VBoxContainer" parent="Layout/Columns/DislikeColumn/Scroll"]
+[node name="DislikeList" type="VBoxContainer" parent="Layout/Columns/DislikeColumn/Board/Scroll"]
 layout_mode = 2
 custom_minimum_size = Vector2(280, 100)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 6
 
-[node name="NeutralColumn" type="VBoxContainer" parent="Layout/Columns"]
+[node name="NeutralColumn" type="PanelContainer" parent="Layout/Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="NeutralHeader" type="Label" parent="Layout/Columns/NeutralColumn"]
+[node name="Board" type="VBoxContainer" parent="Layout/Columns/NeutralColumn"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NeutralHeader" type="Label" parent="Layout/Columns/NeutralColumn/Board"]
 layout_mode = 2
 text = "Neutral (0/7)"
 
-[node name="Scroll" type="ScrollContainer" parent="Layout/Columns/NeutralColumn"]
+[node name="Scroll" type="ScrollContainer" parent="Layout/Columns/NeutralColumn/Board"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="NeutralList" type="VBoxContainer" parent="Layout/Columns/NeutralColumn/Scroll"]
+[node name="NeutralList" type="VBoxContainer" parent="Layout/Columns/NeutralColumn/Board/Scroll"]
 layout_mode = 2
 custom_minimum_size = Vector2(280, 100)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 6
 
-[node name="LikeColumn" type="VBoxContainer" parent="Layout/Columns"]
+[node name="LikeColumn" type="PanelContainer" parent="Layout/Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LikeHeader" type="Label" parent="Layout/Columns/LikeColumn"]
+[node name="Board" type="VBoxContainer" parent="Layout/Columns/LikeColumn"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LikeHeader" type="Label" parent="Layout/Columns/LikeColumn/Board"]
 layout_mode = 2
 text = "Like (0/7)"
 
-[node name="Scroll" type="ScrollContainer" parent="Layout/Columns/LikeColumn"]
+[node name="Scroll" type="ScrollContainer" parent="Layout/Columns/LikeColumn/Board"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="LikeList" type="VBoxContainer" parent="Layout/Columns/LikeColumn/Scroll"]
+[node name="LikeList" type="VBoxContainer" parent="Layout/Columns/LikeColumn/Board/Scroll"]
 layout_mode = 2
 custom_minimum_size = Vector2(280, 100)
 size_flags_horizontal = 3

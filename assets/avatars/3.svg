@@ -1,1 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="160" height="180" viewBox="0 0 160 180"><ellipse cx="80" cy="168" rx="53" ry="8" fill="#101b24" opacity=".4"/><path d="M27 158 Q24 111 53 105 L107 105 Q136 111 133 158 Q80 179 27 158Z" fill="#ff00ff" stroke="#172b38" stroke-width="5"/><path d="M55 110 L80 133 L105 110 L108 164 L52 164Z" fill="#f6ead4"/><path d="M62 111 L64 143 M98 111 L96 143" stroke="#d6bd94" stroke-width="5"/><circle cx="80" cy="148" r="8" fill="#ff00ff"/><path d="M34 65 L35 19 L64 42 Q80 37 97 43 L126 19 L126 66 Q142 113 80 123 Q17 112 34 65Z" fill="#b9a3d8" stroke="#172b38" stroke-width="5"/><path d="M44 36 L45 60 L60 48Z M116 36 L116 60 L101 48Z" fill="#edb9bd"/><path d="M52 91 Q79 81 109 91 Q110 116 80 118 Q49 115 52 91Z" fill="#f5e4d6"/><path d="M72 94 L87 94 L80 101Z" fill="#714650"/><path d="M22 87 L50 94 M22 102 L49 101 M111 94 L140 87 M111 101 L140 103" stroke="#172b38" stroke-width="3"/><ellipse cx="59" cy="81" rx="5" ry="7" fill="#172b38"/><ellipse cx="101" cy="81" rx="5" ry="7" fill="#172b38"/><circle cx="60" cy="79" r="1.5" fill="#fff"/><circle cx="102" cy="79" r="1.5" fill="#fff"/><path d="M71 103 Q80 112 89 103" fill="none" stroke="#714650" stroke-width="3" stroke-linecap="round"/></svg>
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="160" height="180" viewBox="0 0 160 180">
+<!-- Mochi: a sleepy powder-blue cat with a soft cloud patch. -->
+<g stroke="#526b80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<ellipse cx="80" cy="169" rx="44" ry="6" fill="#526b80" opacity=".15" stroke="none"/>
+<path d="M111 151 Q139 162 142 144 Q144 133 134 132" fill="none" stroke="#526b80" stroke-width="14"/><path d="M111 151 Q139 162 142 144 Q144 133 134 132" fill="none" stroke="#aec8d9" stroke-width="8"/>
+<ellipse cx="62" cy="163" rx="12" ry="7" fill="#b6cedc"/><ellipse cx="98" cy="163" rx="12" ry="7" fill="#b6cedc"/>
+<path d="M49 119 Q79 109 109 119 Q120 137 115 155 Q112 167 80 166 Q48 167 45 155 Q40 137 49 119Z" fill="#ff00ff"/>
+<path d="M61 119 Q80 128 98 119 L102 155 Q80 163 58 155Z" fill="#e9e8df"/>
+<path d="M45 130 Q31 130 35 142 Q40 150 50 142 M115 130 Q127 129 125 141 Q120 150 111 142" fill="#b6cedc"/>
+<path d="M35 65 Q28 47 34 24 Q38 14 48 24 L64 41 Q81 36 98 41 L113 24 Q125 13 129 26 Q134 49 124 66 Q134 87 124 105 Q112 123 80 124 Q46 124 35 105 Q25 86 35 65Z" fill="#b6cedc"/>
+<path d="M43 49 L43 31 L57 47 M105 47 L119 31 L119 49" fill="#d6afb9" stroke="none"/>
+<path d="M48 60 Q42 48 58 46 Q67 34 80 44 Q94 33 103 46 Q116 49 109 61 Q107 72 80 77 Q54 71 48 60Z" fill="#dce4e5" stroke="none"/>
+<path d="M62 85 Q80 78 100 85 Q114 96 104 108 Q81 124 57 108 Q46 96 62 85Z" fill="#e9e8df" stroke="none"/>
+<ellipse cx="49" cy="95" rx="8" ry="5" fill="#d7a6b2" stroke="none"/><ellipse cx="111" cy="95" rx="8" ry="5" fill="#d7a6b2" stroke="none"/>
+<path d="M54 81 Q60 87 66 81 M94 81 Q100 87 106 81" fill="none"/>
+<path d="M75 94 Q80 90 85 94 L80 100Z" fill="#af8393" stroke="none"/>
+<path d="M80 100 Q74 107 69 101 M80 100 Q86 107 91 101" fill="none" stroke-width="2"/>
+<path d="M28 88 l14 4 M28 102 l14 -2 M118 92 l14 -4 M118 100 l14 2" fill="none" stroke-width="2"/>
+<path d="M74 139 Q80 132 86 139 Q91 148 80 153 Q69 148 74 139Z" fill="#ff00ff" stroke-width="2"/>
+</g></svg>

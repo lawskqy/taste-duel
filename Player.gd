@@ -10,6 +10,8 @@ var pool: Array = []
 var active_buffs: Array = []
 var active_buff_values: Dictionary = {}
 var bonus_turns: int = 0
+var bonus_turn_sources: Array[String] = []
+var skip_turn_source: String = ""
 var last_effect: Dictionary = {}
 var reverse_next_effect: bool = false
 
@@ -22,6 +24,8 @@ func setup(prefs: Dictionary, items: Array) -> void:
 	active_buffs.clear()
 	active_buff_values.clear()
 	bonus_turns = 0
+	bonus_turn_sources.clear()
+	skip_turn_source = ""
 	last_effect.clear()
 	reverse_next_effect = false
 

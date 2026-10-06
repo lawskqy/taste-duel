@@ -22,7 +22,7 @@ Effects resolve on their named recipient:
 - **Healing block:** blocks every source of healing through the recipient's next turn that starts with the block. If applied during their own turn, it remains through their following turn. A skipped turn also expires the block. Increasing max HP still increases the cap, but cannot bypass the healing block. Max HP is capped at 150.
 - **Extra turn:** belongs to the effect's recipient. They play an additional card after their normal turn. “Enemy gets an extra turn” awards it to the recipient's opponent. Bonus turns stack; a skip consumes one turn and does not require clicking a card.
 - **Reclaim:** the recipient chooses one card from the shared discard pile, or skips. Pending reclaims finish before checking pool exhaustion.
-- **Return played card:** returns the exact card just played to the recipient. It cannot return that same copy twice.
+- **Return played card:** returns the exact card just played to the recipient. It cannot return that same copy twice and does not grant an extra turn. Another play can come from a stored bonus turn, an opponent's skip effect, or an empty opponent pool.
 - **Discard versus destroy:** lost/discarded cards enter the shared pile and can be reclaimed. Destroyed cards cannot.
 - **Distinct negative effects:** effect 25 now reduces next damage by 4; effect 30 reduces maximum HP by 6 (minimum max HP 1, current HP clamped to the new cap). These replace the duplicate discard and copy effects.
 - **Reverse next effect target:** reflects the next effect assigned to the recipient onto the other player, then expires. Reflection happens once per effect; it does not swap existing buffs or their values.
@@ -42,6 +42,8 @@ godot --headless --path . --script res://tests/run_tests.gd
 
 Use your Godot executable's full path if it is not on PATH. The suite checks combat, all 30 effects, duplicate-card returns, setup validation, timer/drag interactions, 40 seeded complete matches, and setup-to-rematch scene transitions. It exits nonzero if a check fails.
 
+Run `godot --headless --path . --script res://tests/ui_layout.gd` for presentation checks at 960×540, 1024×768, 1280×720, and 1920×1080. These cover long player names, ranking cards, overflowing effect messages, and all main dialogs. The game keeps a 1280×720 design canvas with aspect-preserving scaling.
+
 ## Balance and presentation
 
 See [BALANCE_AND_DESIGN.md](BALANCE_AND_DESIGN.md) for rank tables, effect tiers, calculations, simulation results, and the design direction. Combat now has card travel, impact particles, floating HP feedback, and animated health bars. Reduced motion is available in setup and battle.
@@ -54,8 +56,9 @@ Damage effects belong to the named recipient and change only their next outgoing
 
 - Four original SVG character sprites: Pepper the chef, Miso the fox, Byte the robot, and Mochi the cat; five apron colors.
 - Saved player names and customization appear in ranking setup, battle, effect ownership, and results. Rematches keep profiles and clear match state.
-- Select a card to preview it, then press **Play this card**. The preview does not expose your opponent's secret ranking.
+- Open the active player's pool, select a card to preview it, then press **Serve this card**. The preview does not expose your opponent's secret ranking.
 - Animated active-player halos, idle movement, attack reactions, projectile trails, impact particles, healing numbers, and HP bars. Reduced motion suppresses movement while keeping the outcome visible.
-- Synthesized sound cues with a sound toggle; fullscreen and reduced motion controls in Settings. Escape opens/closes settings and closes the journal.
-- The Effect Journal records each spent effect ID, its triggering card, and its recipient. The shared-pool counter makes exhaustion visible.
+- Synthesized sound cues with a sound toggle; fullscreen and reduced motion controls in Settings. Escape closes the current dialog or opens the leave-round prompt.
+- The Effect Journal records each spent effect ID, its triggering card, and its recipient, plus turn handoffs and their reasons. A persistent notice explains who plays next and why a player plays again; it stays visible while selecting a card. Active effects show the source card for pending bonus and skipped turns. The shared-pool counter makes exhaustion visible.
 - Settings and journal overlays block underlying card input. Names are limited to 16 characters; empty names use defaults and identical names show player-slot suffixes.
+- Presentation uses a muted powder-blue palette inspired by the supplied Moonlit Pastel references: navy text, rounded panels and buttons, soft shadows, quiet bubble details, and cream cards. Four redrawn SVG characters have rounded silhouettes, rosy cheeks, and customizable aprons. Battle uses container layouts with separate player panels, a card area, scrollable messages, and a reserved action row.
