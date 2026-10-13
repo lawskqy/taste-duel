@@ -39,7 +39,7 @@ func run() -> void:
 	manager.set_profile(1, "WWWWWWWWWWWWWWWW", 3, 3)
 	for dimensions in [Vector2i(1280, 720), Vector2i(960, 540), Vector2i(1024, 768), Vector2i(1920, 1080)]:
 		root.size = dimensions
-		change_scene_to_file("res://Main.tscn")
+		change_scene_to_file("res://scenes/Main.tscn")
 		await settled()
 		var main = current_scene
 		check_bounds(main, "menu %s" % dimensions)
@@ -64,7 +64,7 @@ func run() -> void:
 		main._show_leave_round_dialog()
 		await settled()
 		check_bounds(main, "leave rankings")
-		change_scene_to_file("res://battle.tscn")
+		change_scene_to_file("res://scenes/battle.tscn")
 		await settled()
 		var battle = current_scene
 		battle.animation_duration = 0

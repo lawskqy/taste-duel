@@ -19,7 +19,7 @@ func fresh_battle():
 	manager.reset()
 	# Keep combat fixtures stable while production samples randomly from each 50-item theme.
 	manager.items = manager.theme_items("food").slice(0, GameManager.ITEM_COUNT_PER_MATCH)
-	var battle = load("res://battle.tscn").instantiate()
+	var battle = load("res://scenes/battle.tscn").instantiate()
 	root.add_child(battle)
 	await process_frame
 	battle.animation_duration = 0
@@ -388,7 +388,7 @@ func test_effect_ownership() -> void:
 	await dispose(b)
 
 func test_forms() -> void:
-	var form = load("res://preferenceForm.tscn").instantiate()
+	var form = load("res://scenes/preferenceForm.tscn").instantiate()
 	root.add_child(form)
 	form.setup(1, manager.items)
 	await process_frame
@@ -444,7 +444,7 @@ func test_matches() -> void:
 		await dispose(b)
 
 func test_scene_flow() -> void:
-	change_scene_to_file("res://Main.tscn")
+	change_scene_to_file("res://scenes/Main.tscn")
 	await process_frame
 	await process_frame
 	var main = current_scene
@@ -463,7 +463,7 @@ func test_scene_flow() -> void:
 	main.current_form._on_confirm()
 	await process_frame
 	await process_frame
-	check(current_scene.scene_file_path == "res://battle.tscn", "both forms start battle")
+	check(current_scene.scene_file_path == "res://scenes/battle.tscn", "both forms start battle")
 	current_scene._end_battle("Player 1", "Test")
 	current_scene.win_screen._on_restart_pressed()
 	await process_frame

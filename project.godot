@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Taste Duel"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://assets/icons/icon.svg"
 
 [autoload]
 
-GameManager="*res://GameManager.gd"
+GameManager="*res://scripts/autoload/GameManager.gd"
 
 [display]
 

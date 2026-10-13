@@ -46,9 +46,9 @@ Run `godot --headless --path . --script res://tests/ui_layout.gd` for presentati
 
 ## Balance and presentation
 
-See [BALANCE_AND_DESIGN.md](BALANCE_AND_DESIGN.md) for rank tables, effect tiers, calculations, simulation results, and the design direction. Combat now has card travel, impact particles, floating HP feedback, and animated health bars. Reduced motion is available in setup and battle.
+See [BALANCE_AND_DESIGN.md](docs/BALANCE_AND_DESIGN.md) for rank tables, effect tiers, calculations, simulation results, and the design direction. Combat now has card travel, impact particles, floating HP feedback, and animated health bars. Reduced motion is available in setup and battle.
 
-Run `godot --headless --path . --script res://tests/balance_report.gd` to compare the previous balance, four candidate balances, and the shipped game. Append `-- shipped` to run only the production rules; results go to `tests/balance_shipped.json`. With the shared pool, the current game produced 378 knockouts, 20 unequal-HP decisions, and 2 draws in 400 seeded random-play matches.
+Run `godot --headless --path . --script res://tests/balance_report.gd` to compare the previous balance, four candidate balances, and the shipped game. Append `-- shipped` to run only the production rules; results go to `tests/reports/balance_shipped.json`. With the shared pool, the current game produced 378 knockouts, 20 unequal-HP decisions, and 2 draws in 400 seeded random-play matches.
 
 Damage effects belong to the named recipient and change only their next outgoing damaging card. Drawing an effect does not necessarily make you its recipient: disliked, liked, and neutral cards route effects differently as described above. The battle log shows the attacker and target explicitly.
 

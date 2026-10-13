@@ -1,0 +1,272 @@
+[gd_scene format=3 uid="uid://ikjcknxwvr6e"]
+[ext_resource type="Script" path="res://scripts/combat/BattleController.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/combat/Player.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/ui/WinScreen.gd" id="3"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/table_example.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/portraits/player1.jpg" id="5"]
+[ext_resource type="Texture2D" path="res://assets/portraits/player2.jpg" id="6"]
+
+[sub_resource type="StyleBoxFlat" id="ModalPanel"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.09, 0.16, 0.18, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.55, 0.57, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_left = 8
+corner_radius_bottom_right = 8
+
+[node name="Battle" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.08, 0.20, 0.22, 1)
+
+[node name="Table" type="TextureRect" parent="."]
+offset_left = 350.0
+offset_top = 235.0
+offset_right = 930.0
+offset_bottom = 495.0
+texture = ExtResource("4")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+modulate = Color(1, 1, 1, 0.45)
+
+[node name="Decks" type="Node2D" parent="."]
+
+
+[node name="CardDeck" type="Node2D" parent="Decks"]
+
+
+[node name="Count" type="Label" parent="Decks/CardDeck"]
+offset_left = 944.0
+offset_top = 58.0
+offset_right = 1260.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 20
+
+[node name="Scroll" type="ScrollContainer" parent="Decks/CardDeck"]
+offset_left = 944.0
+offset_top = 98.0
+offset_right = 1260.0
+offset_bottom = 700.0
+horizontal_scroll_mode = 0
+
+[node name="CardList" type="VBoxContainer" parent="Decks/CardDeck/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CardDeck2" type="Node2D" parent="Decks"]
+
+
+[node name="Count" type="Label" parent="Decks/CardDeck2"]
+offset_left = 20.0
+offset_top = 58.0
+offset_right = 336.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 20
+
+[node name="Scroll" type="ScrollContainer" parent="Decks/CardDeck2"]
+offset_left = 20.0
+offset_top = 98.0
+offset_right = 336.0
+offset_bottom = 700.0
+horizontal_scroll_mode = 0
+
+[node name="CardList" type="VBoxContainer" parent="Decks/CardDeck2/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Players" type="Node2D" parent="."]
+
+
+[node name="Player1" type="Node2D" parent="Players"]
+script = ExtResource("2")
+
+[node name="Player1" type="TextureRect" parent="Players/Player1"]
+offset_left = 368.0
+offset_top = 530.0
+offset_right = 458.0
+offset_bottom = 620.0
+texture = ExtResource("5")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="HPText" type="Label" parent="Players/Player1"]
+offset_left = 474.0
+offset_top = 530.0
+offset_right = 914.0
+offset_bottom = 556.0
+theme_override_font_sizes/font_size = 20
+
+[node name="HP" type="ProgressBar" parent="Players/Player1"]
+offset_left = 474.0
+offset_top = 562.0
+offset_right = 894.0
+offset_bottom = 586.0
+value = 100.0
+show_percentage = false
+
+[node name="Buffs" type="Label" parent="Players/Player1"]
+offset_left = 368.0
+offset_top = 628.0
+offset_right = 912.0
+offset_bottom = 704.0
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14
+
+[node name="Player2" type="Node2D" parent="Players"]
+script = ExtResource("2")
+
+[node name="Player2" type="TextureRect" parent="Players/Player2"]
+offset_left = 368.0
+offset_top = 65.0
+offset_right = 458.0
+offset_bottom = 155.0
+texture = ExtResource("6")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="HPText" type="Label" parent="Players/Player2"]
+offset_left = 474.0
+offset_top = 65.0
+offset_right = 914.0
+offset_bottom = 91.0
+theme_override_font_sizes/font_size = 20
+
+[node name="HP" type="ProgressBar" parent="Players/Player2"]
+offset_left = 474.0
+offset_top = 97.0
+offset_right = 894.0
+offset_bottom = 121.0
+value = 100.0
+show_percentage = false
+
+[node name="Buffs" type="Label" parent="Players/Player2"]
+offset_left = 368.0
+offset_top = 163.0
+offset_right = 912.0
+offset_bottom = 239.0
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14
+
+[node name="PlayedCards" type="Node2D" parent="."]
+position = Vector2(540, 252)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+
+[node name="Turns" type="Label" parent="UI"]
+offset_left = 350.0
+offset_top = 16.0
+offset_right = 930.0
+offset_bottom = 48.0
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="Effects" type="Label" parent="UI"]
+offset_left = 365.0
+offset_top = 415.0
+offset_right = 915.0
+offset_bottom = 525.0
+autowrap_mode = 3
+horizontal_alignment = 1
+text = "Choose a card from your pool. Its power depends on your opponent’s ranking."
+
+[node name="ReclaimPanel" type="PanelContainer" parent="UI"]
+theme_override_styles/panel = SubResource("ModalPanel")
+offset_left = 425.0
+offset_top = 150.0
+offset_right = 855.0
+offset_bottom = 560.0
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="UI/ReclaimPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UI/ReclaimPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "Reclaim a card"
+
+[node name="Scroll" type="ScrollContainer" parent="UI/ReclaimPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Choices" type="VBoxContainer" parent="UI/ReclaimPanel/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Skip" type="Button" parent="UI/ReclaimPanel/VBox"]
+layout_mode = 2
+text = "Skip reclaim"
+
+[node name="WinScreen" type="CanvasLayer" parent="."]
+layer = 3
+visible = false
+script = ExtResource("3")
+
+[node name="Dim" type="ColorRect" parent="WinScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="Panel" type="PanelContainer" parent="WinScreen/Dim"]
+theme_override_styles/panel = SubResource("ModalPanel")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -120.0
+offset_right = 260.0
+offset_bottom = 120.0
+
+[node name="VBox" type="VBoxContainer" parent="WinScreen/Dim/Panel"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="WinScreen/Dim/Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 32
+
+[node name="ReasonLabel" type="Label" parent="WinScreen/Dim/Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HPLabel" type="Label" parent="WinScreen/Dim/Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="RestartButton" type="Button" parent="WinScreen/Dim/Panel/VBox"]
+layout_mode = 2
+text = "Play Again"

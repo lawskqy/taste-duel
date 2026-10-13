@@ -29,7 +29,7 @@ func run() -> void:
 			var hp_decisions = 0
 			for match_seed in range(MATCHES):
 				seed(match_seed + 1000)
-				var battle = load("res://battle.tscn").instantiate()
+				var battle = load("res://scenes/battle.tscn").instantiate()
 				battle.set_script(load("res://tests/SimulationBattle.gd"))
 				root.add_child(battle)
 				battle.prepare(PROFILES[profile_name])
@@ -67,6 +67,6 @@ func run() -> void:
 			results.append(record)
 			print(JSON.stringify(record))
 	var filename = "balance_results" if OS.get_cmdline_user_args().is_empty() else "balance_" + "_".join(OS.get_cmdline_user_args())
-	var output = FileAccess.open("res://tests/%s.json" % filename, FileAccess.WRITE)
+	var output = FileAccess.open("res://tests/reports/%s.json" % filename, FileAccess.WRITE)
 	output.store_string(JSON.stringify(results, "\t"))
 	quit()

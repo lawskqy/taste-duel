@@ -1,4 +1,4 @@
-﻿extends "res://BattleController.gd"
+﻿extends "res://scripts/combat/BattleController.gd"
 
 var profile: Dictionary = {}
 var winner_name: String = ""
